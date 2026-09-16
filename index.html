@@ -3,17 +3,21 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>NEWCAR — Калькулятор v5.3</title>
+<title>NEWCAR — Автомобиль под ключ v6.0</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root{--bg:#0f141b;--card:#202a36;--field:#141c25;--text:#f5f7fa;--muted:#91a0b2;--green:#16b364;--line:#334152;--warn:#f59e0b;--danger:#ef4444;--blue:#3b82f6}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.35 Arial,sans-serif;padding:18px 14px 90px}.wrap{max-width:620px;margin:auto}.brand{display:flex;align-items:center;gap:10px;margin:2px 2px 16px}.logo{font-size:29px;font-weight:800;letter-spacing:-1px}.logo span{color:#16b364}.sub{font-size:12px;color:var(--muted)}.badge{display:inline-block;font-size:10px;padding:3px 7px;border:1px solid #2d7e5a;border-radius:999px;color:#8ee6b5;margin-left:5px}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.tab{border:1px solid var(--line);background:#17202b;color:#fff;border-radius:11px;padding:10px 5px;font-weight:700}.tab.active{border-color:var(--green);background:#132a20}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:12px}.title{font-size:19px;font-weight:800;margin:0 0 13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{margin-bottom:10px}.full{grid-column:1/-1}label{display:block;color:var(--muted);font-size:12px;margin:0 0 5px}input,select{width:100%;background:var(--field);border:1px solid #273443;color:#fff;border-radius:10px;padding:12px;font-size:15px;outline:none}input:focus,select:focus{border-color:var(--green)}input:disabled{opacity:.45}.hint{font-size:11px;color:var(--muted);margin-top:4px}.section{font-weight:800;margin:16px 0 10px}.result{background:#13251e;border:1px solid #1c7048;border-radius:14px;padding:14px}.row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.07)}.row:last-child{border-bottom:0}.row b{white-space:nowrap}.total{font-size:21px;font-weight:800}.profit{font-size:14px;color:#7ee2aa}.gate{margin-top:10px;padding:10px;border-radius:10px;background:#1a2028;color:#d8e0ea}.gate.ok{border:1px solid #1c7048}.gate.bad{border:1px solid #7d2d2d}.gate.warn{border:1px solid #7a5a1a;color:#f7d48a}.btn{width:100%;border:0;border-radius:12px;background:var(--green);color:white;padding:14px;font-size:16px;font-weight:800;margin-top:8px}.secondary{background:#263241}.hidden{display:none}.small{font-size:12px;color:var(--muted)}.rate-date{display:grid;grid-template-columns:1fr 1fr;gap:10px}.footer{text-align:center;color:#718096;font-size:11px;margin-top:15px}.notice{font-size:12px;color:#f7c76b;background:#2a2416;border:1px solid #6b531e;border-radius:10px;padding:10px;margin-top:10px}.auto{font-size:12px;color:#8ee6b5;background:#14271f;border:1px solid #245d44;border-radius:10px;padding:10px;margin-top:8px}.manual{font-size:12px;color:#9fc4ff;background:#17243a;border:1px solid #2d4d7e;border-radius:10px;padding:10px;margin-top:8px}.check{display:flex;align-items:center;gap:8px;margin:6px 0 10px;color:#d8e0ea;font-size:12px}.check input{width:auto}.subline{font-size:11px;color:#9aa7b7;margin:-5px 0 8px}.pill{font-size:10px;padding:2px 6px;border-radius:999px;background:#1a2028;color:#aab7c6;border:1px solid var(--line)}
 @media(max-width:420px){.grid{grid-template-columns:1fr}.rate-date{grid-template-columns:1fr}}
-.rate-ok{border-color:#245d44;background:#14271f;color:#8ee6b5}.rate-warn{border-color:#7a5a1a;background:#2a2416;color:#f7d48a}.source{font-size:11px;color:#6f8196;margin-top:6px}</style>
+.rate-ok{border-color:#245d44;background:#14271f;color:#8ee6b5}.rate-warn{border-color:#7a5a1a;background:#2a2416;color:#f7d48a}.source{font-size:11px;color:#6f8196;margin-top:6px}
+/* v6.0 client UI */
+.client-hero{background:linear-gradient(135deg,#17231f,#202a36);border:1px solid #245d44;border-radius:17px;padding:16px;margin-bottom:12px}.hero-kicker{font-size:11px;color:#8ee6b5;font-weight:700;letter-spacing:.4px}.hero-title{font-size:24px;font-weight:900;margin:5px 0}.hero-text{font-size:13px;color:#b8c4d2}.client-price{font-size:31px;font-weight:900;margin:8px 0;color:#fff}.client-price small{font-size:13px;color:#91a0b2;font-weight:600}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.benefit{background:#141c25;border:1px solid #2c3948;border-radius:10px;padding:8px;font-size:12px}.client-cta{position:sticky;bottom:8px;z-index:20;padding:8px;background:rgba(15,20,27,.92);backdrop-filter:blur(8px);border-radius:14px}.client-cta .btn{margin-top:0}.details{margin-top:10px}.details summary{cursor:pointer;color:#9fc4ff;font-size:12px;font-weight:700;padding:8px 0}.lead-card{border-color:#245d44}.lead-note{font-size:11px;color:#91a0b2;margin-top:6px}.success{background:#14271f;border:1px solid #245d44;color:#8ee6b5;border-radius:10px;padding:10px;font-size:12px;margin-top:8px}.hidden-client{display:none!important}@media(max-width:420px){.benefits{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v5.3</span></div></div>
+  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v6.0</span></div></div>
+  <div class="client-hero"><div class="hero-kicker">NEWCAR • АВТОМОБИЛЬ ПОД КЛЮЧ</div><div class="hero-title">Рассчитайте стоимость автомобиля</div><div class="hero-text">Подбор, доставка и оформление — в одном расчёте. Итоговая цена формируется по вашим параметрам.</div></div>
   <div class="tabs"><button class="tab active" data-tab="calc">📊 Расчёт</button><button class="tab" data-tab="pick">🔎 Подбор</button><button class="tab" data-tab="manager">👨‍💼 Менеджер</button></div>
 
   <section id="calc" class="tabpage">
@@ -33,7 +37,8 @@
       </div>
     </div>
 
-    <div class="card">
+    <details class="card details">
+      <summary>💱 Курс валюты ЦБ РФ — используется автоматически</summary>
       <h2 class="title">Курсы валют ЦБ РФ</h2>
       <div class="rate-date">
         <div class="field"><label>Валюта автомобиля</label><input id="currency" readonly></div>
@@ -43,9 +48,10 @@
       <button type="button" class="btn secondary" id="ratesBtn">🔄 ОБНОВИТЬ КУРСЫ ЦБ РФ</button>
       <div id="ratesStatus" class="auto">Курсы будут загружены по дате расчёта. Если ЦБ недоступен, используется сохранённый резервный курс и это будет отмечено.</div>
       <div class="hint">Источник: Банк России. Курс определяется по дате расчёта; для даты без публикации ЦБ возвращает ближайшую зарегистрированную дату. Для финального КП рекомендуем подтвердить курс на дату таможенного оформления.</div>
-    </div>
+    </details>
 
-    <div class="card">
+    <details class="card details">
+      <summary>🧾 Таможенные платежи — подробная детализация</summary>
       <h2 class="title">Автоматические платежи</h2>
       <div class="grid">
         <div class="field"><label>Таможенная пошлина, ₽</label><input id="duty" type="number" min="0"></div>
@@ -58,8 +64,8 @@
       <label class="check"><input id="manualCustomsFee" type="checkbox"> Использовать таможенный сбор вручную</label>
       <label class="check"><input id="manualDuty" type="checkbox"> Использовать пошлину вручную</label>
       <label class="check"><input id="manualUtil" type="checkbox"> Использовать утильсбор вручную</label>
-      <div class="notice">⚠️ v5.3 разделяет личное пользование и коммерческий ввоз. Для коммерческого ввоза пошлина, НДС, акциз и утильсбор требуют отдельной проверки по ТН ВЭД и характеристикам автомобиля.</div>
-    </div>
+      <div class="notice">⚠️ Для коммерческого ввоза пошлина, НДС, акциз и утильсбор требуют отдельной проверки по ТН ВЭД и характеристикам автомобиля.</div>
+    </details>
 
     <div class="card">
       <h2 class="title">Логистика и оформление</h2>
@@ -68,39 +74,53 @@
         <div class="field"><label>Документы / ЭПТС / СБКТС, ₽</label><input id="docs" type="number" min="0" value="70000"></div>
         <div class="field"><label>Доставка до клиента, ₽</label><input id="delivery" type="number" min="0" value="140000"></div>
         <div class="field"><label>Доп. расходы, ₽</label><input id="extra" type="number" min="0" value="0"></div>
-        <div class="field"><label>Комиссия NEWCAR, ₽</label><input id="commissionFixed" type="number" value="50000" readonly></div>
+        <div class="field hidden-client"><label>Комиссия NEWCAR, ₽</label><input id="commissionFixed" type="number" value="50000" readonly></div>
       </div>
     </div>
 
     <div class="card">
-      <h2 class="title">Результат</h2>
+      <h2 class="title">Ваш расчёт</h2>
       <div class="result">
-        <div class="row"><span>Автомобиль в рублях</span><b id="rCar">0 ₽</b></div>
+        <div class="row"><span>Автомобиль</span><b id="rCar">0 ₽</b></div>
         <div class="row"><span>Логистика</span><b id="rLog">0 ₽</b></div>
-        <div class="row"><span>Пошлина</span><b id="rDuty">0 ₽</b></div>
+        <div class="row"><span>Таможенная пошлина</span><b id="rDuty">0 ₽</b></div>
         <div class="row"><span>Таможенный сбор</span><b id="rCustomsFee">0 ₽</b></div>
         <div class="row"><span>Утильсбор</span><b id="rUtil">0 ₽</b></div>
         <div class="row"><span>Документы</span><b id="rDocs">0 ₽</b></div>
         <div class="row"><span>Доставка</span><b id="rDelivery">0 ₽</b></div>
         <div class="row"><span>Доп. расходы</span><b id="rExtra">0 ₽</b></div>
-        <div class="row"><span class="total">Себестоимость</span><b class="total" id="rCost">0 ₽</b></div>
-        <div class="row"><span>Комиссия NEWCAR</span><b id="rComm">0 ₽</b></div>
-        <div class="row"><span class="total">Цена для клиента</span><b class="total" id="rClient">0 ₽</b></div>
-        <div class="row"><span>Маржа NEWCAR</span><b class="profit" id="rMargin">0%</b></div>
+        <div class="row"><span class="total">Итого под ключ</span><b class="total" id="rClient">0 ₽</b></div>
+      </div>
+      <div class="benefits">
+        <div class="benefit">🔎 Проверка автомобиля</div><div class="benefit">🚢 Логистика</div>
+        <div class="benefit">🧾 Таможенное оформление</div><div class="benefit">📄 ЭПТС / СБКТС</div>
       </div>
       <div id="gate" class="gate">Заполните данные.</div>
-      <div id="marginGate" class="gate hidden"></div>
-      <button type="button" class="btn" id="calcBtn">РАССЧИТАТЬ АВТОМОБИЛЬ</button>
-      <button type="button" class="btn secondary" id="requestBtn">📩 ПОЛУЧИТЬ РАСЧЁТ / ОСТАВИТЬ ЗАЯВКУ</button>
+      <div id="marginGate" class="gate hidden-client"></div>
+      <details class="details"><summary>Показать служебную детализацию</summary>
+        <div class="row"><span>Себестоимость</span><b id="rCost">0 ₽</b></div>
+        <div class="row"><span>Комиссия NEWCAR</span><b id="rComm">0 ₽</b></div>
+        <div class="row"><span>Маржа NEWCAR</span><b class="profit" id="rMargin">0%</b></div>
+      </details>
     </div>
-  </section>
+
+    <div class="card lead-card" id="leadCard">
+      <h2 class="title">📩 Получить расчёт</h2>
+      <div class="field"><label>Ваше имя</label><input id="leadName" placeholder="Как к вам обращаться?"></div>
+      <div class="field"><label>Телефон</label><input id="leadPhone" type="tel" placeholder="+7 900 000-00-00"></div>
+      <div class="field"><label>Комментарий</label><input id="leadComment" placeholder="Например: хочу Toyota RAV4 под ключ"></div>
+      <button type="button" class="btn" id="requestBtn">ПОЛУЧИТЬ РАСЧЁТ И ОСТАВИТЬ ЗАЯВКУ</button>
+      <div class="lead-note">Нажимая кнопку, вы отправляете менеджеру параметры расчёта и указанные контакты.</div>
+      <div id="leadSuccess" class="success hidden-client">✅ Заявка сформирована. Менеджер получит параметры автомобиля и свяжется с вами.</div>
+    </div>
+    <div class="client-cta"><button type="button" class="btn" id="calcBtn">РАССЧИТАТЬ СТОИМОСТЬ</button></div>
 
   <section id="pick" class="tabpage hidden">
-    <div class="card"><h2 class="title">🔎 Подбор по бюджету</h2><div class="field"><label>Бюджет клиента, ₽</label><input id="budget" type="number" value="3000000"></div><div class="field"><label>Страна</label><select id="pickCountry"><option>Любая</option><option>🇯🇵 Япония</option><option>🇨🇳 Китай</option><option>🇰🇷 Корея</option></select></div><div class="small">В следующей версии сюда подключим базу моделей и варианты автомобилей из CRM.</div></div>
+    <div class="card"><h2 class="title">🔎 Подбор по бюджету</h2><div class="field"><label>Бюджет клиента, ₽</label><input id="budget" type="number" value="3000000"></div><div class="field"><label>Страна</label><select id="pickCountry"><option>Любая</option><option>🇯🇵 Япония</option><option>🇨🇳 Китай</option><option>🇰🇷 Корея</option></select></div><button type="button" class="btn" onclick="document.querySelector('[data-tab='calc']').click()">ПЕРЕЙТИ К РАСЧЁТУ</button><div class="small">Подбор по базе моделей и CRM можно подключить следующим этапом.</div></div>
   </section>
 
-  <section id="manager" class="tabpage hidden"><div class="card"><h2 class="title">👨‍💼 Менеджер</h2><div class="field"><label>Ваше имя</label><input id="clientName" placeholder="Как к вам обращаться?"></div><div class="field"><label>Телефон</label><input id="phone" placeholder="+7..."></div><div class="field"><label>Комментарий</label><input id="comment" placeholder="Что хотите привезти?"></div><button type="button" class="btn" id="managerBtn">НАПИСАТЬ МЕНЕДЖЕРУ</button></div></section>
-  <div class="footer">NEWCAR • Telegram Mini App v5.3 • автоматический расчёт</div>
+  <section id="manager" class="tabpage hidden"><div class="card lead-card"><h2 class="title">👨‍💼 Менеджер NEWCAR</h2><div class="field"><label>Ваше имя</label><input id="clientName" placeholder="Как к вам обращаться?"></div><div class="field"><label>Телефон</label><input id="phone" type="tel" placeholder="+7..."></div><div class="field"><label>Что хотите привезти?</label><input id="comment" placeholder="Марка, модель, бюджет"></div><button type="button" class="btn" id="managerBtn">НАПИСАТЬ МЕНЕДЖЕРУ</button></div></section>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v6.0</div>
 </div>
 <script>
 const tg=window.Telegram?.WebApp||null;
@@ -159,7 +179,8 @@ return {value:0,info:'Для этой комбинации автоматиче�
 function customsFeeCalc(customsValue){const v=customsValue||0;if(v<=200000)return {value:1231,band:'до 200 000 ₽'};if(v<=450000)return {value:2462,band:'свыше 200 000 до 450 000 ₽'};if(v<=1200000)return {value:4924,band:'свыше 450 000 до 1 200 000 ₽'};if(v<=2700000)return {value:13541,band:'свыше 1 200 000 до 2 700 000 ₽'};if(v<=4200000)return {value:18465,band:'свыше 2 700 000 до 4 200 000 ₽'};if(v<=5500000)return {value:21344,band:'свыше 4 200 000 до 5 500 000 ₽'};if(v<=10000000)return {value:49240,band:'свыше 5 500 000 до 10 000 000 ₽'};return {value:73860,band:'свыше 10 000 000 ₽'}}
 function calcAuto(){const carRub=(+$('carPrice').value||0)*(+$('rate').value||0);const purpose=$('purpose').value,engine=$('engine').value,volume=+$('volume').value||0,hp=+$('power').value||0,eur=+$('eurRate').value||0;let duty={value:+$('duty').value||0,info:'Пошлина введена вручную.'};let util={value:+$('util').value||0,info:'Утильсбор введён вручную.'};let fee={value:+$('customsFee').value||0,info:'Таможенный сбор введён вручную.'};if(!$('manualDuty').checked){duty=(purpose==='personal'&&engine!=='electric')?personalDuty(carRub,volume,eur):{value:0,info:purpose==='commercial'?'Коммерческий ввоз: введите пошлину после определения ТН ВЭД.':'Электромобиль: используйте отдельный расчёт по ТН ВЭД.'};$('duty').value=Math.round(duty.value)}if(!$('manualUtil').checked){util=utilCalc(volume,hp,engine,purpose);if(util.value>0)$('util').value=Math.round(util.value)}if(!$('manualCustomsFee').checked){if(purpose==='personal'){const x=customsFeeCalc(carRub);fee={value:x.value,info:`Авто: ${x.value.toLocaleString('ru-RU')} ₽, диапазон ${x.band}.`};$('customsFee').value=Math.round(fee.value)}else{fee={value:0,info:'Коммерческий ввоз: проверьте применимый таможенный сбор по декларации.'};$('customsFee').value=0}}
 $('duty').disabled=!$('manualDuty').checked;$('util').disabled=!$('manualUtil').checked;$('customsFee').disabled=!$('manualCustomsFee').checked;$('dutyInfo').textContent=($('manualDuty').checked?'🛠 Ручной режим. ':'🤖 Авто: ')+duty.info;$('utilInfo').textContent=($('manualUtil').checked?'🛠 Ручной режим. ':'🤖 Авто: ')+util.info;$('customsFeeInfo').textContent=($('manualCustomsFee').checked?'🛠 Ручной режим. ':'🤖 Авто: ')+fee.info;return {duty:+$('duty').value||0,util:+$('util').value||0,customsFee:+$('customsFee').value||0}}
-function calculate(){const auto=calcAuto();const r=+$('rate').value||0,car=+$('carPrice').value||0,carRub=car*r,log=+$('logistics').value||0,duty=auto.duty,fee=auto.customsFee,util=auto.util,docs=+$('docs').value||0,delivery=+$('delivery').value||0,extra=+$('extra').value||0;const cost=carRub+log+duty+fee+util+docs+delivery+extra,comm=NEWCAR_COMMISSION,client=cost+comm,margin=client?comm/client:0;$('commissionFixed').value=comm;$('rCar').textContent=money(carRub);$('rLog').textContent=money(log);$('rDuty').textContent=money(duty);$('rCustomsFee').textContent=money(fee);$('rUtil').textContent=money(util);$('rDocs').textContent=money(docs);$('rDelivery').textContent=money(delivery);$('rExtra').textContent=money(extra);$('rCost').textContent=money(cost);$('rComm').textContent=money(comm);$('rClient').textContent=money(client);$('rMargin').textContent=(margin*100).toFixed(2)+'%';const missing=[];if(!$('vehicle').value.trim())missing.push('марка/модель');if(!$('date').value)missing.push('дата расчёта');if(!$('ageCategory').value)missing.push('возраст автомобиля');if(!(car>0))missing.push('цена автомобиля');if(!(r>0))missing.push('курс валюты');if(!(+$('eurRate').value>0))missing.push('курс EUR');if(!(+$('power').value>0))missing.push('мощность');if($('engine').value!=='electric'&&!(+$('volume').value>0))missing.push('объём двигателя');const ready=missing.length===0;const mode=$('purpose').value==='personal'?'личного пользования':'коммерческого ввоза';$('gate').textContent=ready?'🟢 Расчёт сформирован. Автоматические платежи рассчитаны в режиме '+mode+'.':'🟡 Заполните: '+missing.join(', ')+'.';$('gate').className='gate '+(ready?'ok':'bad');const low=margin<MIN_MARGIN;$('marginGate').textContent=low?'🔴 Маржа ниже внутреннего ориентира NEWCAR 5%. Проверьте цену и расходы.':'🟢 Маржа соответствует внутреннему ориентиру NEWCAR 5% и выше.';$('marginGate').className='gate '+(low?'bad':'ok');return {type:'car_calculation',version:'v5.3',date:$('date').value,age_category:$('ageCategory').value,age_label:ageCategoryLabel(),country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:+$('volume').value||0,power:+$('power').value||0,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:+$('eurRate').value||0,car_price_rub:carRub,logistics:log,duty,customs_fee:fee,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_customs_fee:!$('manualCustomsFee').checked,auto_util:!$('manualUtil').checked,rates_source:$('ratesStatus').textContent}}
-$('date').value='2026-09-16';$('country').addEventListener('change',()=>{updateCurrency();loadRates()});$('city').addEventListener('change',()=>{updateDelivery();calculate()});$('engine').addEventListener('change',calculate);$('purpose').addEventListener('change',calculate);$('manualDuty').addEventListener('change',calculate);$('manualUtil').addEventListener('change',calculate);$('manualCustomsFee').addEventListener('change',calculate);['date','vehicle','carPrice','rate','eurRate','logistics','docs','delivery','extra','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));$('ageCategory').addEventListener('change',calculate);$('duty').addEventListener('input',()=>{$('manualDuty').checked=true;calculate()});$('util').addEventListener('input',()=>{$('manualUtil').checked=true;calculate()});$('customsFee').addEventListener('input',()=>{$('manualCustomsFee').checked=true;calculate()});$('ratesBtn').addEventListener('click',loadRates);$('calcBtn').addEventListener('click',e=>{e.preventDefault();try{calculate();$('gate').scrollIntoView({behavior:'smooth',block:'center'})}catch(err){$('gate').textContent='🔴 Ошибка расчёта: '+err.message;$('gate').className='gate bad'}});$('calcBtn').addEventListener('touchend',e=>{e.preventDefault();$('calcBtn').click()});$('requestBtn').addEventListener('click',()=>{const p=calculate();if(tg){tg.sendData(JSON.stringify(p));tg.close()}else alert('Демо-заявка:\n'+JSON.stringify(p,null,2))});$('managerBtn').addEventListener('click',()=>{const data={name:$('clientName').value,phone:$('phone').value,comment:$('comment').value};if(tg){tg.sendData(JSON.stringify({type:'manager_request',...data}));tg.close()}else alert('Заявка менеджеру отправлена (демо).')});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));updateCurrency();updateDelivery();calculate();loadRates();
+function calculate(){const auto=calcAuto();const r=+$('rate').value||0,car=+$('carPrice').value||0,carRub=car*r,log=+$('logistics').value||0,duty=auto.duty,fee=auto.customsFee,util=auto.util,docs=+$('docs').value||0,delivery=+$('delivery').value||0,extra=+$('extra').value||0;const cost=carRub+log+duty+fee+util+docs+delivery+extra,comm=NEWCAR_COMMISSION,client=cost+comm,margin=client?comm/client:0;$('commissionFixed').value=comm;$('rCar').textContent=money(carRub);$('rLog').textContent=money(log);$('rDuty').textContent=money(duty);$('rCustomsFee').textContent=money(fee);$('rUtil').textContent=money(util);$('rDocs').textContent=money(docs);$('rDelivery').textContent=money(delivery);$('rExtra').textContent=money(extra);$('rCost').textContent=money(cost);$('rComm').textContent=money(comm);$('rClient').textContent=money(client);$('rMargin').textContent=(margin*100).toFixed(2)+'%';const missing=[];if(!$('vehicle').value.trim())missing.push('марка/модель');if(!$('date').value)missing.push('дата расчёта');if(!$('ageCategory').value)missing.push('возраст автомобиля');if(!(car>0))missing.push('цена автомобиля');if(!(r>0))missing.push('курс валюты');if(!(+$('eurRate').value>0))missing.push('курс EUR');if(!(+$('power').value>0))missing.push('мощность');if($('engine').value!=='electric'&&!(+$('volume').value>0))missing.push('объём двигателя');const ready=missing.length===0;const mode=$('purpose').value==='personal'?'личного пользования':'коммерческого ввоза';$('gate').textContent=ready?'🟢 Расчёт сформирован. Автоматические платежи рассчитаны в режиме '+mode+'.':'🟡 Заполните: '+missing.join(', ')+'.';$('gate').className='gate '+(ready?'ok':'bad');const low=margin<MIN_MARGIN;$('marginGate').textContent=low?'Маржа ниже внутреннего ориентира NEWCAR 5%.':'Маржа соответствует внутреннему ориентиру NEWCAR 5% и выше.';$('marginGate').className='gate hidden-client';return {type:'car_calculation',version:'v6.0',date:$('date').value,age_category:$('ageCategory').value,age_label:ageCategoryLabel(),country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:+$('volume').value||0,power:+$('power').value||0,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:+$('eurRate').value||0,car_price_rub:carRub,logistics:log,duty,customs_fee:fee,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_customs_fee:!$('manualCustomsFee').checked,auto_util:!$('manualUtil').checked,rates_source:$('ratesStatus').textContent}}
+$('date').value='2026-09-16';$('country').addEventListener('change',()=>{updateCurrency();loadRates()});$('city').addEventListener('change',()=>{updateDelivery();calculate()});$('engine').addEventListener('change',calculate);$('purpose').addEventListener('change',calculate);$('manualDuty').addEventListener('change',calculate);$('manualUtil').addEventListener('change',calculate);$('manualCustomsFee').addEventListener('change',calculate);['date','vehicle','carPrice','rate','eurRate','logistics','docs','delivery','extra','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));$('ageCategory').addEventListener('change',calculate);$('duty').addEventListener('input',()=>{$('manualDuty').checked=true;calculate()});$('util').addEventListener('input',()=>{$('manualUtil').checked=true;calculate()});$('customsFee').addEventListener('input',()=>{$('manualCustomsFee').checked=true;calculate()});$('ratesBtn').addEventListener('click',loadRates);$('calcBtn').addEventListener('click',e=>{e.preventDefault();try{calculate();$('gate').scrollIntoView({behavior:'smooth',block:'center'})}catch(err){$('gate').textContent='🔴 Ошибка расчёта: '+err.message;$('gate').className='gate bad'}});$('calcBtn').addEventListener('touchend',e=>{e.preventDefault();$('calcBtn').click()});$('requestBtn').addEventListener('click',()=>{const p=calculate();const name=$('leadName').value.trim();const phone=$('leadPhone').value.trim();const comment=$('leadComment').value.trim();if(!name&&!phone){$('leadCard').scrollIntoView({behavior:'smooth',block:'center'});$('leadPhone').focus();return}const payload={type:'car_lead',version:'v6.0',client_name:name,phone,comment,calculation:p};if(tg){tg.sendData(JSON.stringify(payload));$('leadSuccess').classList.remove('hidden-client');setTimeout(()=>tg.close(),500)}else{$('leadSuccess').classList.remove('hidden-client');alert('Демо-заявка сформирована.')}});$('managerBtn').addEventListener('click',()=>{const data={name:$('clientName').value,phone:$('phone').value,comment:$('comment').value};if(tg){tg.sendData(JSON.stringify({type:'manager_request',...data}));tg.close()}else alert('Заявка менеджеру отправлена (демо).')});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));if(tg?.initDataUnsafe?.user){const u=tg.initDataUnsafe.user;$('leadName').value=[u.first_name,u.last_name].filter(Boolean).join(' ');}
+updateCurrency();updateDelivery();calculate();loadRates();
 </script>
 </body></html>
