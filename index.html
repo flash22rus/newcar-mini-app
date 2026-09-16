@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v4</span></div></div>
+  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v4.1</span></div></div>
   <div class="tabs"><button class="tab active" data-tab="calc">📊 Расчёт</button><button class="tab" data-tab="pick">🔎 Подбор</button><button class="tab" data-tab="manager">👨‍💼 Менеджер</button></div>
 
   <section id="calc" class="tabpage">
@@ -116,8 +116,9 @@ function personalDuty(carRub,volume,years,eurRate){if(!eurRate||!volume)return {
  if(years<=5){if(volume<=1000)eurPerCc=1.5;else if(volume<=1500)eurPerCc=1.7;else if(volume<=1800)eurPerCc=2.5;else if(volume<=2300)eurPerCc=2.7;else if(volume<=3000)eurPerCc=3;else eurPerCc=3.6}
  else {if(volume<=1000)eurPerCc=3;else if(volume<=1500)eurPerCc=3.2;else if(volume<=1800)eurPerCc=3.5;else if(volume<=2300)eurPerCc=4.8;else if(volume<=3000)eurPerCc=5;else eurPerCc=5.7}
  const eur=volume*eurPerCc;return {value:eur*eurRate,info:`Личное пользование: ${years<=5?'более 3 и до 5 лет':'более 5 лет'}, ставка ${eurPerCc} EUR/см³.`}}
-function utilCalc(volume,hp,years,engine,purpose){if(!volume&&!hp)return {value:0,info:'Укажите объём и мощность.'};const kw=hpToKw(hp);const old=years!==null&&years>3;
- if(purpose==='personal' && hp<=160){const coef=old?.26:.17;return {value:BASE_UTIL*coef,info:`Льготный коэффициент для личного пользования при мощности до 160 л.с.: ${coef}. ${old?'Автомобиль старше 3 лет.':'Автомобиль до 3 лет.'}`}}
+function isOlderThan3Years(production,calc){if(!production||!calc)return false;const p=new Date(production+'T00:00:00'),c=new Date(calc+'T00:00:00');if(Number.isNaN(p)||Number.isNaN(c)||p>c)return false;const third=new Date(p.getFullYear()+3,p.getMonth(),p.getDate());return c>third}
+function utilCalc(volume,hp,years,engine,purpose,production,calc){if(!volume&&!hp)return {value:0,info:'Укажите объём и мощность.'};const kw=hpToKw(hp);const old=isOlderThan3Years(production,calc);
+ if(purpose==='personal' && hp<=160){const coef=old?0.26:0.17;const amount=BASE_UTIL*coef;return {value:amount,info:`Льготная ставка: ${old?'старше 3 лет — 5 200 ₽ (коэффициент 0,26)':'до 3 лет — 3 400 ₽ (коэффициент 0,17)'}. Мощность ${hp} л.с. ≤ 160.`}}
  if(engine==='electric') {const coef=old?70.44:40.04;return {value:BASE_UTIL*coef,info:`Электромобиль: общий коэффициент 2026 ${coef}. Проверить мощность и режим ввоза.`}}
  if(volume>1000&&volume<=2000){const bands=[
   [117.68,40.04,70.44],[139.75,49.5,82.1],[161.81,52.4,87.12],[183.88,55.57,92.27],[205.94,62.83,101.11],[228,71.02,110.62],[250.07,80.26,121.18],[272.13,90,132],[294.2,100,145],[316.26,110,158],[338.33,120,172],[367.75,135,190],[Infinity,150,210]
@@ -129,7 +130,7 @@ function utilCalc(volume,hp,years,engine,purpose){if(!volume&&!hp)return {value:
 function calcAuto(){const carRub=(+$('carPrice').value||0)*(+$('rate').value||0);const years=ageYears($('productionDate').value,$('date').value);const purpose=$('purpose').value,engine=$('engine').value,vol=+$('volume').value||0,hp=+$('power').value||0,eur=+$('eurRate').value||0;
  let duty={value:+$('duty').value||0,info:'Пошлина введена вручную.'},util={value:+$('util').value||0,info:'Утильсбор введён вручную.'};
  if(!$('manualDuty').checked){if(purpose==='personal' && engine!=='electric'){duty=personalDuty(carRub,vol,years,eur)}else{duty={value:0,info:purpose==='commercial'?'Коммерческий ввоз: автоматическая единая ставка не применяется. Введите пошлину после определения ТН ВЭД.':'Электромобиль: используйте отдельный режим расчёта/ТН ВЭД. Введите сумму вручную.'}}$('duty').value=Math.round(duty.value)}
- if(!$('manualUtil').checked){util=utilCalc(vol,hp,years,engine,purpose);if(util.value>0)$('util').value=Math.round(util.value)}
+ if(!$('manualUtil').checked){util=utilCalc(vol,hp,years,engine,purpose,$('productionDate').value,$('date').value);if(util.value>0)$('util').value=Math.round(util.value)}
  $('duty').disabled=!$('manualDuty').checked;$('util').disabled=!$('manualUtil').checked;
  $('dutyInfo').textContent=( $('manualDuty').checked?'🛠 Ручной режим. ':'🤖 Авто: ')+duty.info;
  $('dutyInfo').className=(purpose==='commercial'&&!$('manualDuty').checked)?'manual':'auto';
@@ -141,7 +142,7 @@ function calculate(){updateAge();const auto=calcAuto();const r=+$('rate').value|
  const missing=[];if(!$('vehicle').value.trim())missing.push('марка/модель');if(!$('date').value)missing.push('дата расчёта');if(!$('productionDate').value)missing.push('дата выпуска');if(yearsInvalid())missing.push('дата выпуска не может быть позже даты расчёта');if(!(car>0))missing.push('цена автомобиля');if(!(r>0))missing.push('курс валюты');if(!(+$('eurRate').value>0))missing.push('курс EUR');if(!(+$('volume').value>0)&&$('engine').value!=='electric')missing.push('объём двигателя');if(!(+$('power').value>0))missing.push('мощность');
  const autoNeedsManual=(!$('manualUtil').checked && util===0)||(!$('manualDuty').checked && duty===0);const ready=missing.length===0&&!autoNeedsManual;let msg=ready?'🟢 Расчёт сформирован. Пошлина и утильсбор рассчитаны автоматически в рамках выбранного режима.':'🟡 Расчёт требует проверки: '+missing.concat(autoNeedsManual?['один из автоматических платежей не рассчитан — включите ручной режим и введите подтверждённую сумму']:[]).join(', ')+'.';$('gate').textContent=msg;$('gate').className='gate '+(ready?'ok':(missing.length?'bad':'warn'));
  const lowMargin=margin<MIN_MARGIN;$('marginGate').textContent=lowMargin?'🔴 Маржа ниже внутреннего ориентира NEWCAR 5%. Проверьте цену и расходы.':'🟢 Маржа соответствует внутреннему ориентиру NEWCAR 5% и выше.';$('marginGate').className='gate '+(lowMargin?'bad':'ok');
- return {type:'car_calculation',version:'v4',date:$('date').value,production_date:$('productionDate').value,age:$('age').value,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:vol,power:hp,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:eur,car_price_rub:carRub,logistics,duty,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_util:!$('manualUtil').checked};}
+ return {type:'car_calculation',version:'v4.1',date:$('date').value,production_date:$('productionDate').value,age:$('age').value,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:vol,power:hp,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:eur,car_price_rub:carRub,logistics,duty,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_util:!$('manualUtil').checked};}
 function yearsInvalid(){const p=$('productionDate').value,c=$('date').value;return p&&c&&p>c}
 $('date').value=localDateISO();
 $('country').addEventListener('change',()=>{updateCurrency();calculate()});$('engine').addEventListener('change',()=>{updateEngine();calculate()});$('purpose').addEventListener('change',calculate);$('city').addEventListener('change',calculate);$('manualDuty').addEventListener('change',calculate);$('manualUtil').addEventListener('change',calculate);
