@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>NEWCAR — Автомобиль под ключ</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg:var(--tg-theme-bg-color,#0f1115);--card:var(--tg-theme-secondary-bg-color,#171a20);--text:var(--tg-theme-text-color,#f5f7fa);--muted:var(--tg-theme-hint-color,#8d95a1);--green:#18a558;--border:rgba(255,255,255,.08);--danger:#ff5c5c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}main{max-width:620px;margin:auto;padding:14px 14px 96px}.hero{padding:8px 2px 16px}.logo{font-size:28px;font-weight:800;letter-spacing:.5px}.logo span{color:var(--green)}.sub{color:var(--muted);margin-top:4px}.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin:10px 0}.title{font-size:18px;font-weight:750;margin-bottom:10px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{margin:8px 0}.field label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.field input,.field select{width:100%;border:1px solid var(--border);border-radius:11px;background:var(--bg);color:var(--text);padding:12px;font-size:15px;outline:none}.field input:focus,.field select:focus{border-color:var(--green)}.wide{grid-column:1/-1}.row{display:flex;justify-content:space-between;gap:12px;margin:8px 0}.sum{font-size:24px;font-weight:800}.green{color:var(--green)}.muted{color:var(--muted)}.risk{padding:10px 12px;border-radius:12px;background:rgba(24,165,88,.12)}.risk.warn{background:rgba(255,193,7,.12)}.risk.bad{background:rgba(255,92,92,.12)}.chips{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.chip{border:1px solid var(--border);border-radius:999px;padding:8px 12px;white-space:nowrap}.chip.active{border-color:var(--green);background:rgba(24,165,88,.14)}.small{font-size:12px;color:var(--muted)}.hidden{display:none}.list{margin:0;padding-left:20px}.bottom{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);padding:10px 14px;border-top:1px solid var(--border)}button{width:100%;border:0;border-radius:13px;background:var(--green);color:#fff;font-weight:750;padding:14px;font-size:16px}.secondary{background:transparent;border:1px solid var(--border);color:var(--text);margin-top:8px}.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.nav button{background:var(--card);border:1px solid var(--border);font-size:12px;padding:10px}.nav button.active{border-color:var(--green)}.note{font-size:12px;color:var(--muted);margin-top:9px}.ok{color:var(--green)}.danger{color:var(--danger)}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.</div></section>
+  <div class="nav"><button data-tab="calc" class="active">📊 Расчёт</button><button data-tab="select">🔎 Подбор</button><button data-tab="request">👨‍💼 Менеджер</button></div>
+
+  <section id="calc" class="tab">
+    <div class="card"><div class="title">Автомобиль</div><div class="grid">
+      <div class="field"><label>Страна</label><select id="country"><option>Япония</option><option>Китай</option><option>Корея</option></select></div>
+      <div class="field"><label>Город доставки</label><input id="city" value="Барнаул"></div>
+      <div class="field wide"><label>Марка / модель</label><input id="vehicle" placeholder="Например, Toyota RAV4"></div>
+      <div class="field"><label>Год</label><input id="year" type="number" value="2023"></div>
+      <div class="field"><label>Цена автомобиля, ₽</label><input id="car" type="number" value="1850000"></div>
+    </div></div>
+
+    <div class="card"><div class="title">Расходы</div><div class="grid">
+      <div class="field"><label>Логистика, ₽</label><input id="logistics" type="number" value="320000"></div>
+      <div class="field"><label>Таможня / платежи, ₽</label><input id="customs" type="number" value="430000"></div>
+      <div class="field"><label>Документы / EPTS, ₽</label><input id="docs" type="number" value="70000"></div>
+      <div class="field"><label>Доставка по РФ, ₽</label><input id="delivery" type="number" value="80000"></div>
+      <div class="field"><label>Доп. расходы, ₽</label><input id="extras" type="number" value="70000"></div>
+      <div class="field"><label>Комиссия NEWCAR, %</label><input id="commissionPct" type="number" step="0.1" value="5"></div>
+    </div><div class="note">Таможенные платежи, утильсбор, НДС/акциз и ТН ВЭД должны быть подтверждены по конкретному автомобилю. Значения выше — демонстрационный сценарий.</div></div>
+
+    <div class="card"><div class="title">Итог</div>
+      <div class="row"><span>Полная себестоимость</span><strong id="cost">0 ₽</strong></div>
+      <div class="row"><span>Комиссия NEWCAR</span><strong id="commission">0 ₽</strong></div>
+      <div class="row"><span>Цена для клиента</span><strong class="sum green" id="price">0 ₽</strong></div>
+      <div class="row"><span>Маржа</span><strong id="margin">0%</strong></div>
+      <div id="gate" class="risk">Проверка расчёта…</div>
+    </div>
+  </section>
+
+  <section id="select" class="tab hidden">
+    <div class="card"><div class="title">Подбор по бюджету</div><div class="field"><label>Ваш бюджет, ₽</label><input id="budget" type="number" value="3000000"></div><div class="chips"><div class="chip active">🇯🇵 Япония</div><div class="chip">🇨🇳 Китай</div><div class="chip">🇰🇷 Корея</div></div><div class="note">После заявки менеджер подберёт варианты и рассчитает полную стоимость под ключ.</div></div>
+    <div class="card"><div class="title">Что проверяем</div><ul class="list"><li>историю и доступные сведения об автомобиле;</li><li>ТН ВЭД и таможенную экономику;</li><li>логистику и обязательные расходы;</li><li>соответствие вашему бюджету;</li><li>итоговую стоимость до принятия решения.</li></ul></div>
+  </section>
+
+  <section id="request" class="tab hidden">
+    <div class="card"><div class="title">Заявка менеджеру</div><div class="field"><label>Имя</label><input id="name" placeholder="Как к вам обращаться"></div><div class="field"><label>Телефон</label><input id="phone" placeholder="+7 ..."></div><div class="field"><label>Комментарий</label><input id="comment" placeholder="Что хотите привезти?"></div><div class="note">При отправке данные будут переданы в ваш backend/API для создания лида в Bitrix24. В демо-версии отправка имитируется.</div></div>
+    <div class="card"><div class="title">NEWCAR</div><div class="muted">Подбор • Проверка • Доставка • Расчёт стоимости под ключ</div></div>
+  </section>
+</main>
+<div class="bottom"><button id="mainBtn">РАССЧИТАТЬ АВТОМОБИЛЬ</button></div>
+<script>
+const tg=window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();document.documentElement.style.setProperty('--green','#18a558');}
+const $=id=>document.getElementById(id), money=n=>new Intl.NumberFormat('ru-RU').format(Math.round(n))+' ₽';
+function num(id){return Number($(id).value)||0}
+function calc(){
+ const cost=num('car')+num('logistics')+num('customs')+num('docs')+num('delivery')+num('extras');
+ const commission=Math.min(Math.max(cost*num('commissionPct')/100,45000),300000);
+ const price=cost+commission; const margin=price?commission/price*100:0;
+ $('cost').textContent=money(cost);$('commission').textContent=money(commission);$('price').textContent=money(price);$('margin').textContent=margin.toFixed(2)+'%';
+ const gate=$('gate');
+ if(!num('car')||!num('customs')){gate.className='risk bad';gate.textContent='🔴 Недостаточно данных для расчёта';}
+ else if(margin<5){gate.className='risk warn';gate.textContent='🟡 Маржа ниже внутреннего порога 5% — требуется согласование';}
+ else{gate.className='risk';gate.textContent='🟢 Предварительный расчёт готов. Перед КП требуется проверка таможенных данных.';}
+}
+['car','logistics','customs','docs','delivery','extras','commissionPct'].forEach(id=>$(id).addEventListener('input',calc));calc();
+let active='calc';document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{active=b.dataset.tab;document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('hidden',x.id!==active));$('mainBtn').textContent=active==='calc'?'ОТПРАВИТЬ РАСЧЁТ МЕНЕДЖЕРУ':active==='select'?'ОТПРАВИТЬ ЗАЯВКУ НА ПОДБОР':'НАПИСАТЬ МЕНЕДЖЕРУ';});
+$('mainBtn').onclick=()=>{
+ if(active==='calc'){
+   const payload={type:'calculation',telegramUser:tg?.initDataUnsafe?.user||null,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,year:num('year'),car:num('car'),logistics:num('logistics'),customs:num('customs'),docs:num('docs'),delivery:num('delivery'),extras:num('extras'),cost:num('car')+num('logistics')+num('customs')+num('docs')+num('delivery')+num('extras')};
+   console.log('NEWCAR payload',payload); alert('Расчёт подготовлен. Следующий шаг — передать его менеджеру NEWCAR.');
+ } else if(active==='select'){alert('Заявка на подбор подготовлена. Менеджер свяжется с вами.');} else {alert('Заявка подготовлена. Подключите backend для создания лида в Bitrix24.');}
+};
+</script>
+</body></html>
