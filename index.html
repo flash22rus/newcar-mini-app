@@ -22,7 +22,7 @@
       <div class="grid">
         <div class="field"><label>Дата расчёта</label><input id="date" type="date"></div>
         <div class="field"><label>Страна</label><select id="country"><option value="JP">🇯🇵 Япония</option><option value="CN">🇨🇳 Китай</option><option value="KR">🇰🇷 Корея</option></select></div>
-        <div class="field"><label>Город доставки</label><input id="city" value="Барнаул"></div>
+        <div class="field"><label>Город доставки</label><select id="city"><option value="Новосибирск" selected>Новосибирск</option><option value="Барнаул">Барнаул</option></select></div>
         <div class="field"><label>Марка / модель</label><input id="vehicle" placeholder="Toyota RAV4"></div>
         <div class="field"><label>Дата выпуска</label><input id="productionDate" type="date" value="2023-06-15"></div>
         <div class="field"><label>Возраст на дату расчёта</label><input id="age" readonly value="3–5 лет"></div>
@@ -30,7 +30,7 @@
         <div class="field"><label>Объём двигателя, см³</label><input id="volume" type="number" min="0" value="2000"></div>
         <div class="field"><label>Мощность, л.с.</label><input id="power" type="number" min="0" value="150"></div>
         <div class="field"><label>Цель ввоза</label><select id="purpose"><option value="personal">Личное пользование</option></select></div>
-        <div class="field full"><label>Цена автомобиля</label><input id="carPrice" type="number" min="0" value="1850000"></div>
+        <div class="field full"><label id="priceLabel">Цена автомобиля, JPY</label><input id="carPrice" type="number" min="0" value="1850000"></div>
       </div>
     </div>
 
@@ -70,9 +70,10 @@
         <div class="row"><span>Себестоимость</span><b id="rCost">0 ₽</b></div>
         <div class="row"><span>Комиссия NEWCAR</span><b id="rComm">0 ₽</b></div>
         <div class="row"><span class="total">Цена для клиента</span><b class="total" id="rClient">0 ₽</b></div>
-        <div class="row"><span>Маржа</span><b class="profit" id="rMargin">0%</b></div>
+        <div class="row"><span>Маржа NEWCAR</span><b class="profit" id="rMargin">0%</b></div>
       </div>
       <div id="gate" class="gate">Заполните данные.</div>
+      <div id="marginGate" class="gate hidden"></div>
       <button class="btn" id="calcBtn">РАССЧИТАТЬ АВТОМОБИЛЬ</button>
       <button class="btn secondary" id="requestBtn">📩 ПОЛУЧИТЬ РАСЧЁТ / ОСТАВИТЬ ЗАЯВКУ</button>
     </div>
@@ -90,6 +91,7 @@
 const tg=window.Telegram?.WebApp; if(tg){tg.ready();tg.expand();}
 const rates={JP:{currency:'JPY',rate:0.555942},CN:{currency:'CNY',rate:12.7373},KR:{currency:'KRW',rate:0.0637234}};
 const NEWCAR_COMMISSION=50000;
+const MIN_MARGIN=0.05;
 const $=id=>document.getElementById(id);
 function money(v){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(Math.round(v))+' ₽'}
 function localDateISO(){const d=new Date(); const off=d.getTimezoneOffset(); return new Date(d.getTime()-off*60000).toISOString().slice(0,10)}
@@ -106,7 +108,7 @@ function ageCategory(production, calc){
 }
 $('date').value=localDateISO();
 function updateAge(){const age=ageCategory($('productionDate').value,$('date').value);$('age').value=age||'Проверьте дату выпуска';}
-function updateCurrency(){const r=rates[$('country').value];$('currency').value=r.currency;$('rate').value=r.rate;$('priceCurrencyLabel').textContent=r.currency;}
+function updateCurrency(){const r=rates[$('country').value];$('currency').value=r.currency;$('rate').value=r.rate;$('priceLabel').textContent='Цена автомобиля, '+r.currency;}
 function updateEngine(){const ev=$('engine').value; $('volume').disabled=ev==='electric'; if(ev==='electric')$('volume').value=0;}
 function calculate(){
  updateAge();
@@ -115,11 +117,23 @@ function calculate(){
  const cost=carRub+logistics+duty+util+docs+delivery+extra; const comm=NEWCAR_COMMISSION; const client=cost+comm; const margin=client?comm/client:0;
  $('commissionFixed').value=NEWCAR_COMMISSION;
  $('rCar').textContent=money(carRub);$('rLog').textContent=money(logistics);$('rDuty').textContent=money(duty);$('rUtil').textContent=money(util);$('rDocs').textContent=money(docs);$('rDelivery').textContent=money(delivery);$('rExtra').textContent=money(extra);$('rCost').textContent=money(cost);$('rComm').textContent=money(comm);$('rClient').textContent=money(client);$('rMargin').textContent=(margin*100).toFixed(2)+'%';
- const ready=$('vehicle').value.trim() && car>0 && r>0 && $('date').value && $('productionDate').value && $('age').value && +$('duty').value>=0 && +$('util').value>=0 && $('productionDate').value<=$('date').value;
- $('gate').textContent=ready?'🟢 Расчёт сформирован. Комиссия NEWCAR фиксированная: 50 000 ₽. Перед КП подтвердите пошлину и утильсбор.':'🔴 Заполните марку/модель, даты, цену, курс и таможенные данные.'; $('gate').className='gate '+(ready?'ok':'bad');
+ const missing=[];
+  if(!$('vehicle').value.trim()) missing.push('марка/модель');
+  if(!$('date').value) missing.push('дата расчёта');
+  if(!$('productionDate').value) missing.push('дата выпуска');
+  if($('productionDate').value && $('date').value && $('productionDate').value>$('date').value) missing.push('дата выпуска не может быть позже даты расчёта');
+  if(!(car>0)) missing.push('цена автомобиля');
+  if(!(r>0)) missing.push('курс валюты');
+  if(+$('duty').value<0) missing.push('пошлина');
+  if(+$('util').value<0) missing.push('утильсбор');
+  const ready=missing.length===0;
+  $('gate').textContent=ready?'🟢 Расчёт сформирован. Комиссия NEWCAR фиксированная: 50 000 ₽. Пошлина и утильсбор требуют проверки по конкретному автомобилю.':'🔴 Не заполнено: '+missing.join(', ')+'.'; $('gate').className='gate '+(ready?'ok':'bad');
+  const lowMargin=margin<0.05;
+  $('marginGate').textContent=lowMargin?'🔴 Маржа ниже внутреннего ориентира NEWCAR 5%. Проверьте цену и дополнительные расходы.':'🟢 Маржа соответствует внутреннему ориентиру NEWCAR 5% и выше.';
+  $('marginGate').className='gate '+(lowMargin?'bad':'ok');
  return {date:$('date').value,production_date:$('productionDate').value,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,age:$('age').value,engine:$('engine').value,volume:+$('volume').value,power:+$('power').value,purpose:$('purpose').value,car_price_local:car,currency:$('currency').value,rate:r,car_price_rub:carRub,logistics,duty,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin};
 }
-$('country').addEventListener('change',()=>{updateCurrency();calculate()});$('engine').addEventListener('change',()=>{updateEngine();calculate()});
+$('country').addEventListener('change',()=>{updateCurrency();calculate()});$('engine').addEventListener('change',()=>{updateEngine();calculate()});$('city').addEventListener('change',calculate);
 ['date','productionDate','city','vehicle','carPrice','rate','logistics','duty','util','docs','delivery','extra','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));
 $('calcBtn').addEventListener('click',calculate);
 $('requestBtn').addEventListener('click',()=>{const p=calculate();const payload=JSON.stringify(p);if(tg){tg.sendData(payload);tg.close()}else alert('Демо-заявка:\n'+payload)});
