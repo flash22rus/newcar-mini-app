@@ -22,7 +22,7 @@
       <div class="grid">
         <div class="field"><label>Дата расчёта</label><input id="date" type="date"></div>
         <div class="field"><label>Страна</label><select id="country"><option value="JP">🇯🇵 Япония</option><option value="CN">🇨🇳 Китай</option><option value="KR">🇰🇷 Корея</option></select></div>
-        <div class="field"><label>Город доставки</label><select id="city"><option value="Новосибирск" selected>Новосибирск</option><option value="Барнаул">Барнаул</option></select></div>
+        <div class="field"><label>Город доставки</label><select id="city"><option value="Новосибирск" selected>Новосибирск — 140 000 ₽</option><option value="Барнаул">Барнаул — 150 000 ₽</option></select></div>
         <div class="field"><label>Марка / модель</label><input id="vehicle" value="Toyota RAV4" placeholder="Toyota RAV4"></div>
         <div class="field"><label>Дата выпуска</label><input id="productionDate" type="date" value="2023-06-15"></div>
         <div class="field"><label>Возраст на дату расчёта</label><input id="age" readonly></div>
@@ -41,7 +41,7 @@
         <div class="field"><label>Курс, ₽ за 1 единицу</label><input id="rate" type="number" step="0.000001"></div>
         <div class="field full"><label>Курс EUR для таможенного расчёта, ₽ за 1 EUR</label><input id="eurRate" type="number" step="0.0001" value="99.2525"></div>
       </div>
-      <div class="hint">Курс можно изменить вручную. Для точного клиентского КП используйте курс, применимый к дате таможенного оформления.</div>
+      <div class="hint">Доставка: Новосибирск — 140 000 ₽; Барнаул — 150 000 ₽. При смене города сумма меняется автоматически.<br>Курс можно изменить вручную. Для точного клиентского КП используйте курс, применимый к дате таможенного оформления.</div>
     </div>
 
     <div class="card">
@@ -62,7 +62,7 @@
       <div class="grid">
         <div class="field"><label>Логистика, ₽</label><input id="logistics" type="number" min="0" value="320000"></div>
         <div class="field"><label>Документы / ЭПТС / СБКТС, ₽</label><input id="docs" type="number" min="0" value="70000"></div>
-        <div class="field"><label>Доставка до клиента, ₽</label><input id="delivery" type="number" min="0" value="80000"></div>
+        <div class="field"><label>Доставка до клиента, ₽</label><input id="delivery" type="number" min="0" value="140000"></div>
         <div class="field"><label>Доп. расходы, ₽</label><input id="extra" type="number" min="0" value="0"></div>
         <div class="field"><label>Комиссия NEWCAR, ₽</label><input id="commissionFixed" type="number" value="50000" readonly></div>
       </div>
@@ -85,8 +85,8 @@
       </div>
       <div id="gate" class="gate">Заполните данные.</div>
       <div id="marginGate" class="gate hidden"></div>
-      <button class="btn" id="calcBtn">РАССЧИТАТЬ АВТОМОБИЛЬ</button>
-      <button class="btn secondary" id="requestBtn">📩 ПОЛУЧИТЬ РАСЧЁТ / ОСТАВИТЬ ЗАЯВКУ</button>
+      <button type="button" class="btn" id="calcBtn">РАССЧИТАТЬ АВТОМОБИЛЬ</button>
+      <button type="button" class="btn secondary" id="requestBtn">📩 ПОЛУЧИТЬ РАСЧЁТ / ОСТАВИТЬ ЗАЯВКУ</button>
     </div>
   </section>
 
@@ -94,8 +94,8 @@
     <div class="card"><h2 class="title">🔎 Подбор по бюджету</h2><div class="field"><label>Бюджет клиента, ₽</label><input id="budget" type="number" value="3000000"></div><div class="field"><label>Страна</label><select id="pickCountry"><option>Любая</option><option>🇯🇵 Япония</option><option>🇨🇳 Китай</option><option>🇰🇷 Корея</option></select></div><div class="small">В следующей версии сюда подключим базу моделей и варианты автомобилей из CRM.</div></div>
   </section>
 
-  <section id="manager" class="tabpage hidden"><div class="card"><h2 class="title">👨‍💼 Менеджер</h2><div class="field"><label>Ваше имя</label><input id="clientName" placeholder="Как к вам обращаться?"></div><div class="field"><label>Телефон</label><input id="phone" placeholder="+7..."></div><div class="field"><label>Комментарий</label><input id="comment" placeholder="Что хотите привезти?"></div><button class="btn" id="managerBtn">НАПИСАТЬ МЕНЕДЖЕРУ</button></div></section>
-  <div class="footer">NEWCAR • Telegram Mini App v4 • автоматический ориентир пошлины и утильсбора</div>
+  <section id="manager" class="tabpage hidden"><div class="card"><h2 class="title">👨‍💼 Менеджер</h2><div class="field"><label>Ваше имя</label><input id="clientName" placeholder="Как к вам обращаться?"></div><div class="field"><label>Телефон</label><input id="phone" placeholder="+7..."></div><div class="field"><label>Комментарий</label><input id="comment" placeholder="Что хотите привезти?"></div><button type="button" class="btn" id="managerBtn">НАПИСАТЬ МЕНЕДЖЕРУ</button></div></section>
+  <div class="footer">NEWCAR • Telegram Mini App v4.2 • автоматический ориентир пошлины и утильсбора</div>
 </div>
 <script>
 const tg=window.Telegram?.WebApp; if(tg){tg.ready();tg.expand();}
@@ -107,6 +107,7 @@ function localDateISO(){const d=new Date(),off=d.getTimezoneOffset();return new 
 function ageYears(production,calc){if(!production||!calc)return null;const p=new Date(production+'T00:00:00'),c=new Date(calc+'T00:00:00');if(Number.isNaN(p)||Number.isNaN(c)||p>c)return null;let y=c.getFullYear()-p.getFullYear();const a=new Date(c.getFullYear(),p.getMonth(),p.getDate());if(c<a)y--;return y}
 function ageCategory(production,calc){const y=ageYears(production,calc);if(y===null)return '';if(y<3)return 'Младше 3 лет';if(y<=5)return '3–5 лет';return 'Старше 5 лет'}
 function updateAge(){$('age').value=ageCategory($('productionDate').value,$('date').value)||'Проверьте даты'}
+function updateDelivery(){const city=$('city').value;const amount=city==='Барнаул'?150000:140000;$('delivery').value=amount}
 function updateCurrency(){const r=rates[$('country').value];$('currency').value=r.currency;$('rate').value=r.rate;$('priceLabel').textContent='Цена автомобиля, '+r.currency}
 function updateEngine(){$('volume').disabled=$('engine').value==='electric';if($('engine').value==='electric')$('volume').value=0}
 function hpToKw(hp){return (+hp||0)*0.7355}
@@ -142,16 +143,18 @@ function calculate(){updateAge();const auto=calcAuto();const r=+$('rate').value|
  const missing=[];if(!$('vehicle').value.trim())missing.push('марка/модель');if(!$('date').value)missing.push('дата расчёта');if(!$('productionDate').value)missing.push('дата выпуска');if(yearsInvalid())missing.push('дата выпуска не может быть позже даты расчёта');if(!(car>0))missing.push('цена автомобиля');if(!(r>0))missing.push('курс валюты');if(!(+$('eurRate').value>0))missing.push('курс EUR');if(!(+$('volume').value>0)&&$('engine').value!=='electric')missing.push('объём двигателя');if(!(+$('power').value>0))missing.push('мощность');
  const autoNeedsManual=(!$('manualUtil').checked && util===0)||(!$('manualDuty').checked && duty===0);const ready=missing.length===0&&!autoNeedsManual;let msg=ready?'🟢 Расчёт сформирован. Пошлина и утильсбор рассчитаны автоматически в рамках выбранного режима.':'🟡 Расчёт требует проверки: '+missing.concat(autoNeedsManual?['один из автоматических платежей не рассчитан — включите ручной режим и введите подтверждённую сумму']:[]).join(', ')+'.';$('gate').textContent=msg;$('gate').className='gate '+(ready?'ok':(missing.length?'bad':'warn'));
  const lowMargin=margin<MIN_MARGIN;$('marginGate').textContent=lowMargin?'🔴 Маржа ниже внутреннего ориентира NEWCAR 5%. Проверьте цену и расходы.':'🟢 Маржа соответствует внутреннему ориентиру NEWCAR 5% и выше.';$('marginGate').className='gate '+(lowMargin?'bad':'ok');
- return {type:'car_calculation',version:'v4.1',date:$('date').value,production_date:$('productionDate').value,age:$('age').value,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:vol,power:hp,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:eur,car_price_rub:carRub,logistics,duty,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_util:!$('manualUtil').checked};}
+ return {type:'car_calculation',version:'v4.2',date:$('date').value,production_date:$('productionDate').value,age:$('age').value,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:vol,power:hp,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:eur,car_price_rub:carRub,logistics,duty,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_util:!$('manualUtil').checked};}
 function yearsInvalid(){const p=$('productionDate').value,c=$('date').value;return p&&c&&p>c}
 $('date').value=localDateISO();
-$('country').addEventListener('change',()=>{updateCurrency();calculate()});$('engine').addEventListener('change',()=>{updateEngine();calculate()});$('purpose').addEventListener('change',calculate);$('city').addEventListener('change',calculate);$('manualDuty').addEventListener('change',calculate);$('manualUtil').addEventListener('change',calculate);
+$('country').addEventListener('change',()=>{updateCurrency();calculate()});$('engine').addEventListener('change',()=>{updateEngine();calculate()});$('purpose').addEventListener('change',calculate);$('city').addEventListener('change',()=>{updateDelivery();calculate()});$('manualDuty').addEventListener('change',calculate);$('manualUtil').addEventListener('change',calculate);
 ['date','productionDate','vehicle','carPrice','rate','eurRate','logistics','docs','delivery','extra','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));
 $('duty').addEventListener('input',()=>{$('manualDuty').checked=true;calculate()});$('util').addEventListener('input',()=>{$('manualUtil').checked=true;calculate()});
-$('calcBtn').addEventListener('click',calculate);
+function runCalculation(e){if(e)e.preventDefault();try{calculate();$('gate').scrollIntoView({behavior:'smooth',block:'center'});}catch(err){$('gate').textContent='🔴 Ошибка расчёта: '+err.message;$('gate').className='gate bad';console.error(err)}}
+$('calcBtn').addEventListener('click',runCalculation);
+$('calcBtn').addEventListener('touchend',runCalculation,{passive:false});
 $('requestBtn').addEventListener('click',()=>{const p=calculate();const payload=JSON.stringify(p);if(tg){tg.sendData(payload);tg.close()}else alert('Демо-заявка:\n'+payload)});
 $('managerBtn').addEventListener('click',()=>{const data={name:$('clientName').value,phone:$('phone').value,comment:$('comment').value};if(tg){tg.sendData(JSON.stringify({type:'manager_request',...data}));tg.close()}else alert('Заявка менеджеру отправлена (демо).')});
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));
-updateCurrency();updateEngine();calculate();
+updateCurrency();updateEngine();updateDelivery();calculate();
 </script>
 </body></html>
