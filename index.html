@@ -24,8 +24,8 @@
         <div class="field"><label>Страна</label><select id="country"><option value="JP">🇯🇵 Япония</option><option value="CN">🇨🇳 Китай</option><option value="KR">🇰🇷 Корея</option></select></div>
         <div class="field"><label>Город доставки</label><input id="city" value="Барнаул"></div>
         <div class="field"><label>Марка / модель</label><input id="vehicle" placeholder="Toyota RAV4"></div>
-        <div class="field"><label>Год выпуска</label><input id="year" type="number" min="1980" max="2026" value="2023"></div>
-        <div class="field"><label>Возраст автомобиля</label><select id="age"><option value="lt3">Младше 3 лет</option><option value="3to5">3–5 лет</option><option value="gt5">Старше 5 лет</option></select></div>
+        <div class="field"><label>Дата выпуска</label><input id="productionDate" type="date" value="2023-06-15"></div>
+        <div class="field"><label>Возраст на дату расчёта</label><input id="age" readonly value="3–5 лет"></div>
         <div class="field"><label>Тип двигателя</label><select id="engine"><option value="petrol">Бензин</option><option value="diesel">Дизель</option><option value="electric">Электро</option></select></div>
         <div class="field"><label>Объём двигателя, см³</label><input id="volume" type="number" min="0" value="2000"></div>
         <div class="field"><label>Мощность, л.с.</label><input id="power" type="number" min="0" value="150"></div>
@@ -52,7 +52,7 @@
         <div class="field"><label>Документы / ЭПТС / СБКТС, ₽</label><input id="docs" type="number" min="0" value="70000"></div>
         <div class="field"><label>Доставка до клиента, ₽</label><input id="delivery" type="number" min="0" value="80000"></div>
         <div class="field"><label>Доп. расходы, ₽</label><input id="extra" type="number" min="0" value="0"></div>
-        <div class="field"><label>Комиссия NEWCAR, %</label><input id="commissionPct" type="number" min="0" step="0.1" value="5"></div>
+        <div class="field"><label>Комиссия NEWCAR, ₽</label><input id="commissionFixed" type="number" value="50000" readonly></div>
       </div>
       <div class="notice">⚠️ В этой версии пошлина и утильсбор вводятся вручную. Перед клиентским КП их нужно подтвердить по конкретному автомобилю, ТН ВЭД и действующим нормативам.</div>
     </div>
@@ -84,28 +84,43 @@
 
   <section id="manager" class="tabpage hidden">
     <div class="card"><h2 class="title">👨‍💼 Менеджер</h2><div class="field"><label>Ваше имя</label><input id="clientName" placeholder="Как к вам обращаться?"></div><div class="field"><label>Телефон</label><input id="phone" placeholder="+7..."></div><div class="field"><label>Комментарий</label><input id="comment" placeholder="Что хотите привезти?"></div><button class="btn" id="managerBtn">НАПИСАТЬ МЕНЕДЖЕРУ</button></div></section>
-  <div class="footer">NEWCAR • Telegram Mini App MVP v2</div>
+  <div class="footer">NEWCAR • Telegram Mini App v3</div>
 </div>
 <script>
 const tg=window.Telegram?.WebApp; if(tg){tg.ready();tg.expand();}
 const rates={JP:{currency:'JPY',rate:0.555942},CN:{currency:'CNY',rate:12.7373},KR:{currency:'KRW',rate:0.0637234}};
+const NEWCAR_COMMISSION=50000;
 const $=id=>document.getElementById(id);
 function money(v){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(Math.round(v))+' ₽'}
-function today(){return new Date().toISOString().slice(0,10)}
-$('date').value=today();
-function updateCurrency(){const r=rates[$('country').value];$('currency').value=r.currency;$('rate').value=r.rate;}
+function localDateISO(){const d=new Date(); const off=d.getTimezoneOffset(); return new Date(d.getTime()-off*60000).toISOString().slice(0,10)}
+function ageCategory(production, calc){
+ if(!production || !calc) return '';
+ const p=new Date(production+'T00:00:00'); const c=new Date(calc+'T00:00:00');
+ if(Number.isNaN(p.getTime()) || Number.isNaN(c.getTime()) || p>c) return '';
+ let years=c.getFullYear()-p.getFullYear();
+ const anniversary=new Date(c.getFullYear(),p.getMonth(),p.getDate());
+ if(c<anniversary) years--;
+ if(years<3) return 'Младше 3 лет';
+ if(years<=5) return '3–5 лет';
+ return 'Старше 5 лет';
+}
+$('date').value=localDateISO();
+function updateAge(){const age=ageCategory($('productionDate').value,$('date').value);$('age').value=age||'Проверьте дату выпуска';}
+function updateCurrency(){const r=rates[$('country').value];$('currency').value=r.currency;$('rate').value=r.rate;$('priceCurrencyLabel').textContent=r.currency;}
 function updateEngine(){const ev=$('engine').value; $('volume').disabled=ev==='electric'; if(ev==='electric')$('volume').value=0;}
 function calculate(){
+ updateAge();
  const r=+$('rate').value||0, car=+$('carPrice').value||0, carRub=car*r;
  const logistics=+$('logistics').value||0,duty=+$('duty').value||0,util=+$('util').value||0,docs=+$('docs').value||0,delivery=+$('delivery').value||0,extra=+$('extra').value||0;
- const cost=carRub+logistics+duty+util+docs+delivery+extra; const pct=Math.max(0,+$('commissionPct').value||0)/100; const comm=Math.min(Math.max(cost*pct,45000),300000); const client=cost+comm; const margin=client?comm/client:0;
+ const cost=carRub+logistics+duty+util+docs+delivery+extra; const comm=NEWCAR_COMMISSION; const client=cost+comm; const margin=client?comm/client:0;
+ $('commissionFixed').value=NEWCAR_COMMISSION;
  $('rCar').textContent=money(carRub);$('rLog').textContent=money(logistics);$('rDuty').textContent=money(duty);$('rUtil').textContent=money(util);$('rDocs').textContent=money(docs);$('rDelivery').textContent=money(delivery);$('rExtra').textContent=money(extra);$('rCost').textContent=money(cost);$('rComm').textContent=money(comm);$('rClient').textContent=money(client);$('rMargin').textContent=(margin*100).toFixed(2)+'%';
- const ready=$('vehicle').value.trim() && car>0 && r>0 && +$('year').value>0 && +$('duty').value>=0 && +$('util').value>=0;
- $('gate').textContent=ready?'🟢 Расчёт сформирован. Перед КП подтвердите пошлину и утильсбор.':'🔴 Заполните марку/модель, цену, год и курсовые/таможенные данные.'; $('gate').className='gate '+(ready?'ok':'bad');
- return {date:$('date').value,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,year:+$('year').value,age:$('age').value,engine:$('engine').value,volume:+$('volume').value,power:+$('power').value,purpose:$('purpose').value,car_price_local:car,currency:$('currency').value,rate:r,car_price_rub:carRub,logistics,duty,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin};
+ const ready=$('vehicle').value.trim() && car>0 && r>0 && $('date').value && $('productionDate').value && $('age').value && +$('duty').value>=0 && +$('util').value>=0 && $('productionDate').value<=$('date').value;
+ $('gate').textContent=ready?'🟢 Расчёт сформирован. Комиссия NEWCAR фиксированная: 50 000 ₽. Перед КП подтвердите пошлину и утильсбор.':'🔴 Заполните марку/модель, даты, цену, курс и таможенные данные.'; $('gate').className='gate '+(ready?'ok':'bad');
+ return {date:$('date').value,production_date:$('productionDate').value,country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,age:$('age').value,engine:$('engine').value,volume:+$('volume').value,power:+$('power').value,purpose:$('purpose').value,car_price_local:car,currency:$('currency').value,rate:r,car_price_rub:carRub,logistics,duty,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin};
 }
 $('country').addEventListener('change',()=>{updateCurrency();calculate()});$('engine').addEventListener('change',()=>{updateEngine();calculate()});
-['date','city','vehicle','year','age','carPrice','rate','logistics','duty','util','docs','delivery','extra','commissionPct','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));
+['date','productionDate','city','vehicle','carPrice','rate','logistics','duty','util','docs','delivery','extra','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));
 $('calcBtn').addEventListener('click',calculate);
 $('requestBtn').addEventListener('click',()=>{const p=calculate();const payload=JSON.stringify(p);if(tg){tg.sendData(payload);tg.close()}else alert('Демо-заявка:\n'+payload)});
 $('managerBtn').addEventListener('click',()=>{const data={name:$('clientName').value,phone:$('phone').value,comment:$('comment').value};if(tg){tg.sendData(JSON.stringify({type:'manager_request',...data}));tg.close()}else alert('Заявка менеджеру отправлена (демо).')});
