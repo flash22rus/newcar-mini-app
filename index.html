@@ -310,7 +310,7 @@
 
 </section>
 
-  <div class="footer">NEWCAR • Автомобиль под ключ • v6.7</div>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v6.8</div>
 
 </div>
 
@@ -326,7 +326,7 @@ const NEWCAR_COMMISSION=50000, MIN_MARGIN=.05, BASE_UTIL=20000;
 
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
 
-const APP_VERSION='v6.7';
+const APP_VERSION='v6.8';
 
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 
@@ -343,6 +343,36 @@ function ageCategoryLabel(){const v=$('ageCategory').value;return v==='under3'?'
 function isOlderThan3Years(){return $('ageCategory').value!=='under3'}
 
 function hpToKw(hp){return hp*0.73549875}
+
+// Рабочие тарифы NEWCAR для автоматической подстановки.
+
+// Ранее согласованные значения: логистика 320 000 ₽, документы 70 000 ₽.
+
+// Отдельные утверждённые суммы по Китаю/Корее ранее не были зафиксированы,
+
+// поэтому до утверждения NEWCAR используется тот же базовый ориентир.
+
+const COUNTRY_COSTS={
+
+  JP:{logistics:320000,docs:70000},
+
+  CN:{logistics:320000,docs:70000},
+
+  KR:{logistics:320000,docs:70000}
+
+};
+
+function updateCountryCosts(){
+
+  const c=COUNTRY_COSTS[$('country').value]||COUNTRY_COSTS.JP;
+
+  $('logistics').value=c.logistics;
+
+  $('docs').value=c.docs;
+
+  calculate();
+
+}
 
 function currencyForCountry(){return {JP:'JPY',CN:'CNY',KR:'KRW'}[$('country').value]||'JPY'}
 
@@ -472,7 +502,7 @@ $('date').max=localDateISO();
 
 $('date').addEventListener('change',loadRates);
 
-$('country').addEventListener('change',()=>{updateCurrency();loadRates()});$('city').addEventListener('change',()=>{updateDelivery();calculate()});$('engine').addEventListener('change',calculate);$('purpose').addEventListener('change',calculate);$('manualDuty').addEventListener('change',calculate);$('manualUtil').addEventListener('change',calculate);$('manualCustomsFee').addEventListener('change',calculate);['date','vehicle','carPrice','rate','eurRate','logistics','docs','delivery','extra','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));$('ageCategory').addEventListener('change',calculate);$('duty').addEventListener('input',()=>{$('manualDuty').checked=true;calculate()});$('util').addEventListener('input',()=>{$('manualUtil').checked=true;calculate()});$('customsFee').addEventListener('input',()=>{$('manualCustomsFee').checked=true;calculate()});$('ratesBtn').addEventListener('click',loadRates);$('calcBtn').addEventListener('click',e=>{e.preventDefault();try{calculate();$('gate').scrollIntoView({behavior:'smooth',block:'center'})}catch(err){$('gate').textContent='🔴 Ошибка расчёта: '+err.message;$('gate').className='gate bad'}});$('calcBtn').addEventListener('touchend',e=>{e.preventDefault();$('calcBtn').click()});async function sendLead(payload){
+$('country').addEventListener('change',()=>{updateCurrency();updateCountryCosts();loadRates()});$('city').addEventListener('change',()=>{updateDelivery();calculate()});$('engine').addEventListener('change',calculate);$('purpose').addEventListener('change',calculate);$('manualDuty').addEventListener('change',calculate);$('manualUtil').addEventListener('change',calculate);$('manualCustomsFee').addEventListener('change',calculate);['date','vehicle','carPrice','rate','eurRate','logistics','docs','delivery','extra','volume','power'].forEach(id=>$(id).addEventListener('input',calculate));$('ageCategory').addEventListener('change',calculate);$('duty').addEventListener('input',()=>{$('manualDuty').checked=true;calculate()});$('util').addEventListener('input',()=>{$('manualUtil').checked=true;calculate()});$('customsFee').addEventListener('input',()=>{$('manualCustomsFee').checked=true;calculate()});$('ratesBtn').addEventListener('click',loadRates);$('calcBtn').addEventListener('click',e=>{e.preventDefault();try{calculate();$('gate').scrollIntoView({behavior:'smooth',block:'center'})}catch(err){$('gate').textContent='🔴 Ошибка расчёта: '+err.message;$('gate').className='gate bad'}});$('calcBtn').addEventListener('touchend',e=>{e.preventDefault();$('calcBtn').click()});async function sendLead(payload){
 
   const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
 
@@ -592,7 +622,7 @@ $('managerBtn').addEventListener('click',async()=>{
 
 });document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));if(tg?.initDataUnsafe?.user){const u=tg.initDataUnsafe.user;$('leadName').value=[u.first_name,u.last_name].filter(Boolean).join(' ');}
 
-updateCurrency();updateDelivery();calculate();loadRates();
+updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
 </script>
 
