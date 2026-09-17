@@ -24,7 +24,39 @@
 
 /* v6.3 client UI */
 
-.client-hero{background:linear-gradient(135deg,#17231f,#202a36);border:1px solid #245d44;border-radius:17px;padding:16px;margin-bottom:12px}.hero-kicker{font-size:11px;color:#8ee6b5;font-weight:700;letter-spacing:.4px}.hero-title{font-size:24px;font-weight:900;margin:5px 0}.hero-text{font-size:13px;color:#b8c4d2}.client-price{font-size:31px;font-weight:900;margin:8px 0;color:#fff}.client-price small{font-size:13px;color:#91a0b2;font-weight:600}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.benefit{background:#141c25;border:1px solid #2c3948;border-radius:10px;padding:8px;font-size:12px}.client-cta{position:relative;z-index:2;margin:14px 0 0;padding:8px;background:rgba(15,20,27,.96);backdrop-filter:blur(10px);border:1px solid #243342;border-radius:14px;box-shadow:0 -8px 24px rgba(0,0,0,.28)}.client-cta .btn{margin-top:0}.client-cta::after{content:"";display:block;height:2px}.client-cta .btn{min-height:48px}.details{margin-top:10px}.details summary{cursor:pointer;color:#9fc4ff;font-size:12px;font-weight:700;padding:8px 0}.lead-card{border-color:#245d44}.lead-note{font-size:11px;color:#91a0b2;margin-top:6px}.success{background:#14271f;border:1px solid #245d44;color:#8ee6b5;border-radius:10px;padding:10px;font-size:12px;margin-top:8px}.hidden-client{display:none!important}@media(max-width:420px){.benefits{grid-template-columns:1fr}}
+.client-hero{background:linear-gradient(135deg,#17231f,#202a36);border:1px solid #245d44;border-radius:17px;padding:16px;margin-bottom:12px}.hero-kicker{font-size:11px;color:#8ee6b5;font-weight:700;letter-spacing:.4px}.hero-title{font-size:24px;font-weight:900;margin:5px 0}.hero-text{font-size:13px;color:#b8c4d2}.client-price{font-size:31px;font-weight:900;margin:8px 0;color:#fff}.client-price small{font-size:13px;color:#91a0b2;font-weight:600}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.benefit{background:#141c25;border:1px solid #2c3948;border-radius:10px;padding:8px;font-size:12px}.client-cta{position:relative;z-index:2;margin:14px 0 0;padding:8px;background:rgba(15,20,27,.96);backdrop-filter:blur(10px);border:1px solid #243342;border-radius:14px;box-shadow:0 -8px 24px rgba(0,0,0,.28)}.client-cta .btn{margin-top:0}.client-cta::after{content:"";display:block;height:2px}.client-cta .btn{min-height:48px}/* v7.2 client calculation result */
+
+.calc-client-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+
+.calc-client-kicker{font-size:11px;color:#8ee6b5;font-weight:800;letter-spacing:.4px}
+
+.calc-client-title{font-size:16px;font-weight:800;margin-top:3px}
+
+.calc-client-badge{font-size:10px;color:#b8c4d2;border:1px solid #334252;border-radius:999px;padding:5px 8px;white-space:nowrap}
+
+.calc-total{background:linear-gradient(135deg,#14271f,#101b20);border:1px solid #2d7e5a;border-radius:16px;padding:16px;margin:10px 0 12px}
+
+.calc-total-label{font-size:12px;color:#9fb0bf}
+
+.calc-total-value{font-size:30px;font-weight:900;margin-top:3px}
+
+.calc-total-note{font-size:11px;color:#8ee6b5;margin-top:4px}
+
+.calc-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+.calc-break{background:#141c25;border:1px solid #2c3948;border-radius:11px;padding:10px}
+
+.calc-break span{display:block;color:#91a0b2;font-size:10px}
+
+.calc-break b{display:block;font-size:14px;margin-top:3px}
+
+.calc-next{margin-top:12px;padding:11px;border-radius:12px;background:#17243a;border:1px solid #2d4d7e;color:#dce8f8;font-size:12px}
+
+.calc-next b{color:#fff}
+
+@media(max-width:420px){.calc-breakdown{grid-template-columns:1fr}}
+
+.details{margin-top:10px}.details summary{cursor:pointer;color:#9fc4ff;font-size:12px;font-weight:700;padding:8px 0}.lead-card{border-color:#245d44}.lead-note{font-size:11px;color:#91a0b2;margin-top:6px}.success{background:#14271f;border:1px solid #245d44;color:#8ee6b5;border-radius:10px;padding:10px;font-size:12px;margin-top:8px}.hidden-client{display:none!important}@media(max-width:420px){.benefits{grid-template-columns:1fr}}
 
  
 
@@ -174,37 +206,45 @@
 
     <div class="card">
 
-      <h2 class="title">Ваш расчёт</h2>
+      <div class="calc-client-head">
 
-      <div class="result">
+        <div><div class="calc-client-kicker">NEWCAR • РАСЧЁТ ПОД КЛЮЧ</div><div class="calc-client-title">Ваш ориентировочный расчёт</div></div>
 
-        <div class="row"><span>Автомобиль</span><b id="rCar">0 ₽</b></div>
-
-        <div class="row"><span>Логистика</span><b id="rLog">0 ₽</b></div>
-
-        <div class="row"><span>Таможенная пошлина</span><b id="rDuty">0 ₽</b></div>
-
-        <div class="row"><span>Таможенный сбор</span><b id="rCustomsFee">0 ₽</b></div>
-
-        <div class="row"><span>Утильсбор</span><b id="rUtil">0 ₽</b></div>
-
-        <div class="row"><span>Документы</span><b id="rDocs">0 ₽</b></div>
-
-        <div class="row"><span>Доставка</span><b id="rDelivery">0 ₽</b></div>
-
-        <div class="row"><span>Доп. расходы</span><b id="rExtra">0 ₽</b></div>
-
-        <div class="row"><span class="total">Итого под ключ</span><b class="total" id="rClient">0 ₽</b></div>
+        <div class="calc-client-badge">🇯🇵 / 🇨🇳 / 🇰🇷</div>
 
       </div>
 
-      <div class="benefits">
+      <div class="calc-total">
 
-        <div class="benefit">🔎 Проверка автомобиля</div><div class="benefit">🚢 Логистика</div>
+        <div class="calc-total-label">Стоимость автомобиля для клиента</div>
 
-        <div class="benefit">🧾 Таможенное оформление</div><div class="benefit">📄 ЭПТС / СБКТС</div>
+        <div class="calc-total-value" id="rClient">0 ₽</div>
+
+        <div class="calc-total-note">ориентировочная стоимость под ключ</div>
 
       </div>
+
+      <div class="calc-breakdown">
+
+        <div class="calc-break"><span>🚗 Автомобиль</span><b id="rCar">0 ₽</b></div>
+
+        <div class="calc-break"><span>🚢 Логистика</span><b id="rLog">0 ₽</b></div>
+
+        <div class="calc-break"><span>🧾 Таможня</span><b id="rDuty">0 ₽</b></div>
+
+        <div class="calc-break"><span>💳 Таможенный сбор</span><b id="rCustomsFee">0 ₽</b></div>
+
+        <div class="calc-break"><span>♻️ Утильсбор</span><b id="rUtil">0 ₽</b></div>
+
+        <div class="calc-break"><span>📄 Документы</span><b id="rDocs">0 ₽</b></div>
+
+        <div class="calc-break"><span>📍 Доставка</span><b id="rDelivery">0 ₽</b></div>
+
+        <div class="calc-break"><span>➕ Доп. расходы</span><b id="rExtra">0 ₽</b></div>
+
+      </div>
+
+      <div class="calc-next"><b>Что входит:</b> подбор и проверка автомобиля, логистика, таможенное оформление, документы и доставка. Точный расчёт подтверждает менеджер NEWCAR после проверки параметров автомобиля.</div>
 
       <div id="gate" class="gate">Заполните данные.</div>
 
@@ -310,7 +350,7 @@
 
 </section>
 
-  <div class="footer">NEWCAR • Автомобиль под ключ • v7.1</div>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v7.2</div>
 
 </div>
 
@@ -326,7 +366,7 @@ const NEWCAR_COMMISSION=50000, MIN_MARGIN=.05, BASE_UTIL=20000;
 
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
 
-const APP_VERSION='v7.1';
+const APP_VERSION='v7.2';
 
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 
