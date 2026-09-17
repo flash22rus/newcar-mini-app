@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 
-<title>NEWCAR — Автомобиль под ключ v6.9</title>
+<title>NEWCAR — Автомобиль под ключ v7.0</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -48,7 +48,7 @@
 
 <div class="wrap">
 
-  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v6.9</span></div></div>
+  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v7.0</span></div></div>
 
   <div class="client-hero"><div class="hero-kicker">NEWCAR • АВТОМОБИЛЬ ПОД КЛЮЧ</div><div class="hero-title">Рассчитайте стоимость автомобиля</div><div class="hero-text">Подбор, доставка и оформление — в одном расчёте. Итоговая цена формируется по вашим параметрам.</div></div>
 
@@ -310,7 +310,7 @@
 
 </section>
 
-  <div class="footer">NEWCAR • Автомобиль под ключ • v6.9</div>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v7.0</div>
 
 </div>
 
@@ -326,7 +326,7 @@ const NEWCAR_COMMISSION=50000, MIN_MARGIN=.05, BASE_UTIL=20000;
 
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
 
-const APP_VERSION='v6.9';
+const APP_VERSION='v7.0';
 
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 
@@ -558,7 +558,7 @@ function showSuccess(payload){
 
     else $('rClient')?.scrollIntoView({behavior:'smooth',block:'center'});
 
-    if(tg && tg.initData && typeof tg.close==='function'){setTimeout(()=>{try{tg.close()}catch(e){}},150)}
+    // Не закрываем Mini App автоматически: пользователь сам нажимает X/закрытие или возвращается к форме.
 
   };
 
@@ -638,7 +638,7 @@ $('managerBtn').addEventListener('click',async()=>{
 
   await submitLead(payload,$('managerSuccess'));
 
-});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));if(tg?.initDataUnsafe?.user){const u=tg.initDataUnsafe.user;$('leadName').value=[u.first_name,u.last_name].filter(Boolean).join(' ');if(u.username && !$('pickContact').value)$('pickContact').value='@'+u.username;}
+});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));if(tg?.initDataUnsafe?.user){const u=tg.initDataUnsafe.user;$('leadName').value=[u.first_name,u.last_name].filter(Boolean).join(' ');}
 
 updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
