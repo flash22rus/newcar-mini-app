@@ -436,7 +436,7 @@ const MIN_MARGIN=0.05;
 
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
 
-const APP_VERSION='v9.0';
+const APP_VERSION='9.4';
 
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 
@@ -670,7 +670,7 @@ async function submitLead(payload,successEl){
 
     document.querySelectorAll('.btn').forEach(b=>{if(b.id!=='successCloseBtn')b.disabled=true});
 
-    await sendLead(payload);
+    await sendLead(window.NEWCAR_BUILD_LEAD ? window.NEWCAR_BUILD_LEAD(payload) : payload);
 
     showSuccess(payload);
 
@@ -914,7 +914,7 @@ updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
       if(btn){btn.disabled=true;btn.textContent='⏳ ОТПРАВКА...';}
 
-      await sendLead(payload);
+      await sendLead(window.NEWCAR_BUILD_LEAD ? window.NEWCAR_BUILD_LEAD(payload) : payload);
 
       if(btn){btn.textContent='✅ ЗАЯВКА ОТПРАВЛЕНА';}
 
@@ -1069,6 +1069,108 @@ updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
     initTabs();
 
   }
+
+})();
+
+</script>
+
+
+
+<script>
+
+/* NEWCAR v9.4 — structured lead data */
+
+(function(){
+
+  window.NEWCAR_BUILD_LEAD = function(payload){
+
+    payload = payload || {};
+
+    const f = v => (v === undefined || v === null || v === '') ? '—' : String(v);
+
+    const money = v => {
+
+      if(v === undefined || v === null || v === '') return '—';
+
+      const n = Number(String(v).replace(/\s/g,'').replace(',','.'));
+
+      return Number.isFinite(n) ? n.toLocaleString('ru-RU') + ' ₽' : String(v);
+
+    };
+
+
+    const lines = [
+
+      '🚗 ЗАЯВКА NEWCAR',
+
+      '',
+
+      '📌 Тип: ' + f(payload.type === 'car_request' ? 'Автомобиль из расчёта' :
+
+                         payload.type === 'selection_request' ? 'Подбор автомобиля' :
+
+                         payload.type === 'manager_request' ? 'Связь с менеджером' : payload.type),
+
+      '📅 Дата: ' + f(payload.date),
+
+      '🌍 Страна: ' + f(payload.country),
+
+      '🏙 Город получения: ' + f(payload.city),
+
+      '🚘 Автомобиль: ' + f(payload.vehicle || payload.make_model),
+
+      '🕐 Возраст: ' + f(payload.age_category || payload.age),
+
+      '⚙️ Двигатель: ' + f(payload.engine),
+
+      '🔧 Объём: ' + f(payload.volume),
+
+      '🐎 Мощность: ' + f(payload.power),
+
+      '🎯 Назначение: ' + f(payload.purpose),
+
+      '💬 Комментарий: ' + f(payload.comment),
+
+      '',
+
+      '💰 РАСЧЁТ',
+
+      'Цена автомобиля: ' + money(payload.car_price_rub),
+
+      'Логистика: ' + money(payload.logistics),
+
+      'Доставка: ' + money(payload.delivery),
+
+      'Таможенная пошлина: ' + money(payload.duty),
+
+      'Таможенный сбор: ' + money(payload.customs_fee),
+
+      'Утильсбор: ' + money(payload.util),
+
+      'Документы: ' + money(payload.docs),
+
+      'Доп. расходы: ' + money(payload.extra),
+
+      'Комиссия NEWCAR: ' + money(payload.commission),
+
+      'ИТОГО: ' + money(payload.client_price),
+
+      '',
+
+      '👤 Контакт: ' + f(payload.contact),
+
+      '📞 Способ связи: ' + f(payload.method || payload.communication)
+
+    ];
+
+
+    payload.lead_summary = lines.join('\n');
+
+    payload.lead_version = 'NEWCAR v9.4';
+
+    return payload;
+
+  };
 
 })();
 
