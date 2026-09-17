@@ -276,7 +276,7 @@
 
   </div>
 
-  <div class="card request-box"><h2 class="title">📩 Запросить подбор</h2><div class="field"><label>Телефон или Telegram</label><input id="pickContact" placeholder="+7 900 000-00-00 или @username"></div><div class="field"><label>Комментарий</label><input id="pickComment" placeholder="Например: нужен RAV4 для семьи, левый руль не принципиален"></div><button type="button" class="btn" id="pickRequestBtn">🔎 ПОДОБРАТЬ МНЕ АВТО</button><div id="pickSuccess" class="success hidden-client">✅ Запрос на подбор сформирован. Менеджер свяжется с вами.</div><div class="mini-note">После отправки менеджер получит бюджет, страну, возраст, кузов, двигатель и ваши приоритеты.</div></div>
+  <div class="card request-box"><h2 class="title">📩 Запросить подбор</h2><div class="field"><label>Телефон или Telegram</label><input id="pickContact" placeholder="+7 900 000-00-00 или @username"></div><div class="field"><label>Комментарий</label><input id="pickComment" placeholder="Например: нужен RAV4 для семьи, левый руль не принципиален"></div><button type="button" class="btn" id="pickRequestBtn">🔎 ПОДОБРАТЬ МНЕ АВТО</button><div id="pickSuccess" class="success hidden-client">✅ Запрос на подбор сформирован. Менеджер свяжется с вами.</div><div class="mini-note">После отправки менеджер получит все параметры подбора и ваши контактные данные.</div></div>
 
   <div class="card"><div class="pick-grid"><div class="pick-card"><strong>🇯🇵 Япония</strong><span>Аукционы и проверенная история</span></div><div class="pick-card"><strong>🇨🇳 Китай</strong><span>Широкий выбор комплектаций</span></div><div class="pick-card"><strong>🇰🇷 Корея</strong><span>Корейский рынок и автомобили с пробегом</span></div><div class="pick-card"><strong>🧾 Под ключ</strong><span>Проверка → расчёт → доставка</span></div></div></div>
 
@@ -292,7 +292,7 @@
 
     <div class="field"><label>Ваше имя</label><input id="clientName" placeholder="Как к вам обращаться?"></div>
 
-    <div class="field"><label>Телефон</label><input id="phone" type="tel" placeholder="+7 900 000-00-00"></div>
+    <div class="field"><label>Телефон или Telegram</label><input id="phone" placeholder="+7 900 000-00-00 или @username"></div>
 
     <div class="field"><label>Что хотите привезти?</label><input id="comment" placeholder="Марка, модель, бюджет, пожелания"></div>
 
@@ -310,7 +310,7 @@
 
 </section>
 
-  <div class="footer">NEWCAR • Автомобиль под ключ • v7.0</div>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v7.1</div>
 
 </div>
 
@@ -326,7 +326,7 @@ const NEWCAR_COMMISSION=50000, MIN_MARGIN=.05, BASE_UTIL=20000;
 
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
 
-const APP_VERSION='v7.0';
+const APP_VERSION='v7.1';
 
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 
@@ -528,13 +528,17 @@ function showSuccess(payload){
 
       const priorities=(payload.priorities||[]).length?payload.priorities.join(', '):'Без приоритета';
 
-      summary.innerHTML=`<div class=\"srow\"><span>Бюджет</span><b>${money(payload.budget)}</b></div><div class=\"srow\"><span>Страна</span><b>${country}</b></div><div class=\"srow\"><span>Кузов</span><b>${payload.body||'Любой'}</b></div><div class=\"srow\"><span>Двигатель</span><b>${payload.engine||'Любой'}</b></div><div class=\"srow\"><span>Приоритеты</span><b>${priorities}</b></div>`;
+      summary.innerHTML=`<div class="srow"><span>Бюджет</span><b>${money(payload.budget)}</b></div><div class="srow"><span>Страна</span><b>${country}</b></div><div class="srow"><span>Кузов</span><b>${payload.body||'Любой'}</b></div><div class="srow"><span>Двигатель</span><b>${payload.engine||'Любой'}</b></div><div class="srow"><span>Приоритеты</span><b>${priorities}</b></div>`;
+
+    }else if(payload?.type==='manager_request'){
+
+      summary.innerHTML=`<div class="srow"><span>Имя</span><b>${payload.name||'—'}</b></div><div class="srow"><span>Контакт</span><b>${payload.phone||'—'}</b></div><div class="srow"><span>Связаться</span><b>${payload.contact_method||'Telegram'}</b></div><div class="srow"><span>Запрос</span><b>${payload.comment||'—'}</b></div>`;
 
     }else{
 
       const carName=payload?.vehicle||'Автомобиль';
 
-      const dateText=payload?.date?fmtDateRU(payload.date):'';
+      const dateText=payload?.date?fmtDateRU(payload.date):'—';
 
       const currency=payload?.currency||'';
 
@@ -542,7 +546,7 @@ function showSuccess(payload){
 
       const total=payload?.client_price>0?money(payload.client_price):'—';
 
-      summary.innerHTML=`<div class=\"srow\"><span>Автомобиль</span><b>${carName}</b></div><div class=\"srow\"><span>Дата расчёта</span><b>${dateText}</b></div><div class=\"srow\"><span>Цена автомобиля</span><b>${carLocal}</b></div><div class=\"srow stotal\"><span>Стоимость под ключ</span><b>${total}</b></div>`;
+      summary.innerHTML=`<div class="srow"><span>Автомобиль</span><b>${carName}</b></div><div class="srow"><span>Дата расчёта</span><b>${dateText}</b></div><div class="srow"><span>Цена автомобиля</span><b>${carLocal}</b></div><div class="srow stotal"><span>Стоимость под ключ</span><b>${total}</b></div>`;
 
     }
 
@@ -556,9 +560,9 @@ function showSuccess(payload){
 
     if(payload?.type==='selection_request') $('pick')?.scrollIntoView({behavior:'smooth',block:'start'});
 
-    else $('rClient')?.scrollIntoView({behavior:'smooth',block:'center'});
+    else if(payload?.type==='manager_request') $('manager')?.scrollIntoView({behavior:'smooth',block:'start'});
 
-    // Не закрываем Mini App автоматически: пользователь сам нажимает X/закрытие или возвращается к форме.
+    else $('rClient')?.scrollIntoView({behavior:'smooth',block:'center'});
 
   };
 
@@ -632,7 +636,7 @@ $('managerBtn').addEventListener('click',async()=>{
 
   const name=$('clientName').value.trim(),phone=$('phone').value.trim(),comment=$('comment').value.trim(),method=$('contactMethod').value;
 
-  if(!phone&&!comment){$('phone').focus();return}
+  if(!phone){$('phone').focus();return}
 
   const payload={type:'manager_request',version:APP_VERSION,name,phone,comment,contact_method:method};
 
