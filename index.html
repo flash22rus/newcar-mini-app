@@ -408,6 +408,14 @@
 
   <div class="card"><h2 class="title">Почему удобно работать с NEWCAR</h2><div class="manager-actions"><div class="contact-card"><div class="contact-icon">🔎</div><div><b>Подбор</b><span>Под ваши задачи и бюджет</span></div></div><div class="contact-card"><div class="contact-icon">🧾</div><div><b>Прозрачный расчёт</b><span>Стоимость до покупки</span></div></div><div class="contact-card"><div class="contact-icon">🚢</div><div><b>Доставка</b><span>Контроль логистики</span></div></div><div class="contact-card"><div class="contact-icon">🤝</div><div><b>Сопровождение</b><span>До получения автомобиля</span></div></div></div></div>
 
+<div class="field">
+
+<label>Комментарий для уточнения данных по авто</label>
+
+<textarea id="managerComment" rows="4" placeholder="Например: цвет, комплектация, привод, тип двигателя, желаемый год или другие пожелания"></textarea>
+
+</div>
+
 </section>
 
   <div class="footer">NEWCAR • Автомобиль под ключ • v9.0</div>
@@ -714,7 +722,9 @@ $('pickRequestBtn').addEventListener('click',async()=>{
 
   const priorities=[...document.querySelectorAll('#pickPriorities .choice.active')].map(x=>x.dataset.value);
 
-  const payload={type:'selection_request',version:APP_VERSION,budget,vehicle:$('pickVehicle').value.trim(),country:$('pickCountry').value,age:$('pickAge').value,body:$('pickBody').value,engine:$('pickEngine').value,priorities,contact,comment:$('pickComment').value.trim()};
+  const payload={type:'selection_request',version:APP_VERSION,budget,vehicle:$('pickVehicle').value.trim(),country:$('pickCountry').value,age:$('pickAge').value,body:$('pickBody').value,engine:$('pickEngine').value,priorities,contact,comment:$('pickComment').value.trim()  comment: $('managerComment')?.value?.trim() || '',
+
+};
 
   await submitLead(payload,$('pickSuccess'));
 
