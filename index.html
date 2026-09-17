@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>NEWCAR — Автомобиль под ключ v8.6</title>
+<title>NEWCAR — Автомобиль под ключ v8.9</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root{--bg:#0f141b;--card:#202a36;--field:#141c25;--text:#f5f7fa;--muted:#91a0b2;--green:#16b364;--line:#334152;--warn:#f59e0b;--danger:#ef4444;--blue:#3b82f6}
@@ -11,7 +11,7 @@
 @media(max-width:420px){.grid{grid-template-columns:1fr}.rate-date{grid-template-columns:1fr}}
 .rate-ok{border-color:#245d44;background:#14271f;color:#8ee6b5}.rate-warn{border-color:#7a5a1a;background:#2a2416;color:#f7d48a}.source{font-size:11px;color:#6f8196;margin-top:6px}
 /* v6.3 client UI */
-.client-hero{background:linear-gradient(135deg,#17231f,#202a36);border:1px solid #245d44;border-radius:17px;padding:16px;margin-bottom:12px}.hero-kicker{font-size:11px;color:#8ee6b5;font-weight:700;letter-spacing:.4px}.hero-title{font-size:24px;font-weight:900;margin:5px 0}.hero-text{font-size:13px;color:#b8c4d2}.client-price{font-size:31px;font-weight:900;margin:8px 0;color:#fff}.client-price small{font-size:13px;color:#91a0b2;font-weight:600}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.benefit{background:#141c25;border:1px solid #2c3948;border-radius:10px;padding:8px;font-size:12px}.client-cta{position:relative;z-index:2;margin:14px 0 0;padding:8px;background:rgba(15,20,27,.96);backdrop-filter:blur(10px);border:1px solid #243342;border-radius:14px;box-shadow:0 -8px 24px rgba(0,0,0,.28)}.client-cta .btn{margin-top:0}.client-cta::after{content:"";display:block;height:2px}.client-cta .btn{min-height:48px}/* v8.6 client calculation result */
+.client-hero{background:linear-gradient(135deg,#17231f,#202a36);border:1px solid #245d44;border-radius:17px;padding:16px;margin-bottom:12px}.hero-kicker{font-size:11px;color:#8ee6b5;font-weight:700;letter-spacing:.4px}.hero-title{font-size:24px;font-weight:900;margin:5px 0}.hero-text{font-size:13px;color:#b8c4d2}.client-price{font-size:31px;font-weight:900;margin:8px 0;color:#fff}.client-price small{font-size:13px;color:#91a0b2;font-weight:600}.benefits{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.benefit{background:#141c25;border:1px solid #2c3948;border-radius:10px;padding:8px;font-size:12px}.client-cta{position:relative;z-index:2;margin:14px 0 0;padding:8px;background:rgba(15,20,27,.96);backdrop-filter:blur(10px);border:1px solid #243342;border-radius:14px;box-shadow:0 -8px 24px rgba(0,0,0,.28)}.client-cta .btn{margin-top:0}.client-cta::after{content:"";display:block;height:2px}.client-cta .btn{min-height:48px}/* v8.9 client calculation result */
 .calc-client-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
 .calc-client-kicker{font-size:11px;color:#8ee6b5;font-weight:800;letter-spacing:.4px}
 .calc-client-title{font-size:16px;font-weight:800;margin-top:3px}
@@ -64,7 +64,7 @@
 <div id="successOverlay" class="success-overlay hidden-client"><div class="success-modal"><div class="success-icon">✅</div><h2>Заявка отправлена</h2><p>Менеджер NEWCAR получил ваши параметры. Мы свяжемся с вами для уточнения деталей.</p><div id="successSummary" class="success-summary"></div><button type="button" class="btn" id="successCloseBtn">ВЕРНУТЬСЯ В NEWCAR</button></div></div>
 
 <div class="wrap">
-  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v8.6</span></div></div>
+  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v8.9</span></div></div>
   <div class="client-hero"><div class="hero-kicker">NEWCAR • АВТОМОБИЛЬ ПОД КЛЮЧ</div><div class="hero-title">Рассчитайте стоимость автомобиля</div><div class="hero-text">Подбор, доставка и оформление — в одном расчёте. Итоговая цена формируется по вашим параметрам.</div></div>
   <div class="tabs"><button class="tab active" data-tab="calc">📊 Расчёт</button><button class="tab" data-tab="pick">🔎 Подбор</button><button class="tab" data-tab="manager">👨‍💼 Менеджер</button></div>
 
@@ -74,7 +74,7 @@
       <div class="grid">
         <div class="field"><label>Дата расчёта</label><input id="date" type="date"></div>
         <div class="field"><label>Страна</label><select id="country"><option value="JP">🇯🇵 Япония</option><option value="CN">🇨🇳 Китай</option><option value="KR">🇰🇷 Корея</option></select></div>
-        <div class="field"><label>Город доставки</label><select id="city"><option value="Новосибирск" selected>Новосибирск — 150 000 ₽</option></select></div>
+        <div class="field"><label>Город получения</label><select id="city"><option value="Владивосток">Владивосток — 0 ₽</option><option value="Новосибирск" selected>Новосибирск — 150 000 ₽</option></select></div>
         <div class="field"><label>Марка / модель</label><input id="vehicle" value="" placeholder="Например: Toyota RAV4"></div>
         <div class="field"><label>Возраст автомобиля</label><select id="ageCategory"><option value="under3">До 3 лет</option><option value="3to5" selected>3–5 лет</option><option value="over5">Старше 5 лет</option></select></div>
         <div class="field"><label>Тип двигателя</label><select id="engine"><option value="petrol">Бензин</option><option value="diesel">Дизель</option><option value="electric">Электро</option></select></div>
@@ -118,13 +118,13 @@
     <div class="card">
       <h2 class="title">Логистика и оформление</h2>
       <div class="grid">
-        <div class="field"><label>Логистика и оформление до Новосибирска, ₽</label><input id="logistics" type="number" min="0" value=""></div>
-        <div class="field hidden-client"><label>Документы / ЭПТС / СБКТС, ₽</label><input id="docs" type="number" min="0" value="0"></div>
-        <div class="field hidden-client"><label>Доставка до Новосибирска, ₽</label><input id="delivery" type="number" min="0" value="0" readonly></div>
-        <div class="field"><label>Доп. расходы, ₽</label><input id="extra" type="number" min="0" value="0"></div>
-        <div class="field hidden-client"><label>Комиссия NEWCAR, ₽</label><input id="commissionFixed" type="number" value="0" readonly></div>
-      <div class="notice">ℹ️ Предварительные данные по доставке. В зависимости от автомобиля стоимость доставки может корректироваться.</div>
+        <div class="field"><label>🚢 Логистика до Владивостока, ₽</label><input id="logistics" type="number" min="0" value=""></div>
+        <div class="field"><label>🚚 Доставка Владивосток → Новосибирск, ₽</label><input id="delivery" type="number" min="0" value="150000"></div>
+        <div class="field"><label>📄 Документы / ЭПТС / СБКТС, ₽</label><input id="docs" type="number" min="0" value="80000"></div>
+        <div class="field"><label>👨‍💼 Комиссия NEWCAR, ₽</label><input id="commissionFixed" type="number" value="75000" readonly></div>
+        <div class="field"><label>➕ Доп. расходы, ₽</label><input id="extra" type="number" min="0" value="0"></div>
       </div>
+      <div class="notice">ℹ️ Предварительные данные по доставке. В зависимости от автомобиля стоимость доставки может корректироваться.</div>
     </div>
 
     <div class="card">
@@ -139,15 +139,17 @@
       </div>
       <div class="calc-breakdown">
         <div class="calc-break"><span>🚗 Автомобиль</span><b id="rCar">0 ₽</b></div>
-        <div class="calc-break"><span>🚢 Логистика</span><b id="rLog">0 ₽</b></div>
+        <div class="calc-break"><span>🚢 Логистика до Владивостока</span><b id="rLog">0 ₽</b></div>
         <div class="calc-break"><span>🧾 Таможня</span><b id="rDuty">0 ₽</b></div>
         <div class="calc-break"><span>💳 Таможенный сбор</span><b id="rCustomsFee">0 ₽</b></div>
         <div class="calc-break"><span>♻️ Утильсбор</span><b id="rUtil">0 ₽</b></div>
-        <div class="calc-break"><span>📄 Документы</span><b id="rDocs">0 ₽</b></div>
+        <div class="calc-break"><span>📄 Документы / ЭПТС / СБКТС</span><b id="rDocs">0 ₽</b></div>
         
+        <div class="calc-break"><span>🚚 Доставка Владивосток → <span id="rDeliveryCity">Новосибирск</span></span><b id="rDelivery">0 ₽</b></div>
         <div class="calc-break"><span>➕ Доп. расходы</span><b id="rExtra">0 ₽</b></div>
+        <div class="calc-break"><span>👨‍💼 Комиссия NEWCAR</span><b id="rCommClient">0 ₽</b></div>
       </div>
-      <div class="calc-next"><b>Что входит:</b> подбор и проверка автомобиля, логистика, таможенное оформление, документы и доставка. Точный расчёт подтверждает менеджер NEWCAR после проверки параметров автомобиля.</div>
+      <div class="calc-next"><b>Что входит:</b> подбор и проверка автомобиля, логистика до Владивостока, доставка до выбранного города, таможенное оформление и документы. Точный расчёт подтверждает менеджер NEWCAR после проверки параметров автомобиля.</div>
       <div id="gate" class="gate">Заполните данные.</div>
       <div id="marginGate" class="gate hidden-client"></div>
       <details class="details"><summary>Показать служебную детализацию</summary>
@@ -200,30 +202,31 @@
   </div>
   <div class="card"><h2 class="title">Почему удобно работать с NEWCAR</h2><div class="manager-actions"><div class="contact-card"><div class="contact-icon">🔎</div><div><b>Подбор</b><span>Под ваши задачи и бюджет</span></div></div><div class="contact-card"><div class="contact-icon">🧾</div><div><b>Прозрачный расчёт</b><span>Стоимость до покупки</span></div></div><div class="contact-card"><div class="contact-icon">🚢</div><div><b>Доставка</b><span>Контроль логистики</span></div></div><div class="contact-card"><div class="contact-icon">🤝</div><div><b>Сопровождение</b><span>До получения автомобиля</span></div></div></div></div>
 </section>
-  <div class="footer">NEWCAR • Автомобиль под ключ • v8.6</div>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v8.9</div>
 </div>
 <script>
 const tg=window.Telegram?.WebApp||null;
 if(tg){tg.ready();tg.expand();}
 const $=id=>document.getElementById(id);
-const NEWCAR_COMMISSION=0;
+const NEWCAR_COMMISSION=75000;
+const MIN_MARGIN=0.05;
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
-const APP_VERSION='v8.6';
+const APP_VERSION='v8.9';
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 const FALLBACK={JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 const CODES={JPY:'R01820',CNY:'R01375',KRW:'R01815',EUR:'R01239',USD:'R01235'};
+const BASE_UTIL=20000;
 function money(n){return Math.round(n||0).toLocaleString('ru-RU')+' ₽'}
 function localDateISO(){const d=new Date();const z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`}
 function ageCategoryLabel(){const v=$('ageCategory').value;return v==='under3'?'До 3 лет':v==='3to5'?'3–5 лет':'Старше 5 лет'}
 function isOlderThan3Years(){return $('ageCategory').value!=='under3'}
 function hpToKw(hp){return hp*0.73549875}
-// Рабочие тарифы NEWCAR: предварительная логистика до Новосибирска.
-// В сумму логистики включена доставка до Новосибирска.
-// Отдельная доставка до Новосибирска второй раз не добавляется.
+// Рабочие тарифы NEWCAR: предварительная логистика до Владивостока.
+// Доставка Владивосток → Новосибирск рассчитывается отдельно.
 const COUNTRY_COSTS={
-  JP:{logistics:422000,docs:0},
-  CN:{logistics:555000,docs:0},
-  KR:{logistics:455000,docs:0}
+  JP:{logistics:116000,docs:80000},
+  CN:{logistics:250000,docs:80000},
+  KR:{logistics:150000,docs:80000}
 };
 function updateCountryCosts(){
   const c=COUNTRY_COSTS[$('country').value]||COUNTRY_COSTS.JP;
@@ -233,7 +236,7 @@ function updateCountryCosts(){
 }
 function currencyForCountry(){return {JP:'JPY',CN:'CNY',KR:'KRW'}[$('country').value]||'JPY'}
 function updateCurrency(){const cur=currencyForCountry();$('currency').value=cur;$('priceLabel').textContent='Цена автомобиля, '+cur;const defaults={JPY:FALLBACK.JPY,CNY:FALLBACK.CNY,KRW:FALLBACK.KRW};if(!$('rate').value||$('rate').dataset.currency!==cur){$('rate').value=defaults[cur];$('rate').dataset.currency=cur}}
-function updateDelivery(){$('delivery').value=0}
+function updateDelivery(){const city=$('city')?.value||'Новосибирск';$('delivery').value=city==='Владивосток'?0:150000}
 function parseCbr(xml){const doc=new DOMParser().parseFromString(xml,'text/xml');const vals={};doc.querySelectorAll('Valute').forEach(v=>{const code=v.querySelector('CharCode')?.textContent?.trim();const nominal=+(v.querySelector('Nominal')?.textContent||'1').replace(',','.');const value=+(v.querySelector('Value')?.textContent||'0').replace(',','.');if(code&&value)vals[code]=value/nominal});return vals}
 function fmtDateRU(iso){const [y,m,d]=iso.split('-');return `${d}/${m}/${y}`}
 async function loadRates(){
@@ -289,7 +292,7 @@ return {value:0,info:'Для этой комбинации автоматиче�
 function customsFeeCalc(customsValue){const v=customsValue||0;if(v<=200000)return {value:1231,band:'до 200 000 ₽'};if(v<=450000)return {value:2462,band:'свыше 200 000 до 450 000 ₽'};if(v<=1200000)return {value:4924,band:'свыше 450 000 до 1 200 000 ₽'};if(v<=2700000)return {value:13541,band:'свыше 1 200 000 до 2 700 000 ₽'};if(v<=4200000)return {value:18465,band:'свыше 2 700 000 до 4 200 000 ₽'};if(v<=5500000)return {value:21344,band:'свыше 4 200 000 до 5 500 000 ₽'};if(v<=10000000)return {value:49240,band:'свыше 5 500 000 до 10 000 000 ₽'};return {value:73860,band:'свыше 10 000 000 ₽'}}
 function calcAuto(){const carRub=(+$('carPrice').value||0)*(+$('rate').value||0);const purpose=$('purpose').value,engine=$('engine').value,volume=+$('volume').value||0,hp=+$('power').value||0,eur=+$('eurRate').value||0;let duty={value:+$('duty').value||0,info:'Пошлина введена вручную.'};let util={value:+$('util').value||0,info:'Утильсбор введён вручную.'};let fee={value:+$('customsFee').value||0,info:'Таможенный сбор введён вручную.'};if(!$('manualDuty').checked){duty=(purpose==='personal'&&engine!=='electric')?personalDuty(carRub,volume,eur):{value:0,info:purpose==='commercial'?'Коммерческий ввоз: введите пошлину после определения ТН ВЭД.':'Электромобиль: используйте отдельный расчёт по ТН ВЭД.'};$('duty').value=Math.round(duty.value)}if(!$('manualUtil').checked){util=utilCalc(volume,hp,engine,purpose);if(util.value>0)$('util').value=Math.round(util.value)}if(!$('manualCustomsFee').checked){if(purpose==='personal'){const x=customsFeeCalc(carRub);fee={value:x.value,info:`Авто: ${x.value.toLocaleString('ru-RU')} ₽, диапазон ${x.band}.`};$('customsFee').value=Math.round(fee.value)}else{fee={value:0,info:'Коммерческий ввоз: проверьте применимый таможенный сбор по декларации.'};$('customsFee').value=0}}
 $('duty').disabled=!$('manualDuty').checked;$('util').disabled=!$('manualUtil').checked;$('customsFee').disabled=!$('manualCustomsFee').checked;$('dutyInfo').textContent=($('manualDuty').checked?'🛠 Ручной режим. ':'🤖 Авто: ')+duty.info;$('utilInfo').textContent=($('manualUtil').checked?'🛠 Ручной режим. ':'🤖 Авто: ')+util.info;$('customsFeeInfo').textContent=($('manualCustomsFee').checked?'🛠 Ручной режим. ':'🤖 Авто: ')+fee.info;return {duty:+$('duty').value||0,util:+$('util').value||0,customsFee:+$('customsFee').value||0}}
-function calculate(){const vehicle=($('vehicle').value||'').trim();const car=+$('carPrice').value||0;const r=+$('rate').value||0;const volume=+$('volume').value||0;const hp=+$('power').value||0;const engine=$('engine').value;const purpose=$('purpose').value;if(!vehicle||!(car>0)||!(r>0)||!(volume>0&&hp>0)){['rCar','rLog','rDuty','rCustomsFee','rUtil','rDocs','rDelivery','rExtra','rCost','rComm','rClient'].forEach(id=>$(id).textContent='0 ₽');$('rMargin').textContent='0%';$('gate').textContent='🟡 Заполните данные автомобиля и цену — расчёт не выполняется автоматически.';$('gate').className='gate bad';$('marginGate').className='gate hidden-client';return {type:'car_calculation',version:APP_VERSION,date:$('date').value,vehicle,car_price_local:car,rate:r,volume,power:hp};}const auto=calcAuto();const carRub=car*r,log=+$('logistics').value||0,duty=auto.duty,fee=auto.customsFee,util=auto.util,docs=+$('docs').value||0,delivery=+$('delivery').value||0,extra=+$('extra').value||0;const cost=carRub+log+duty+fee+util+docs+delivery+extra,comm=NEWCAR_COMMISSION,client=cost+comm,margin=client?comm/client:0;$('commissionFixed').value=comm;$('rCar').textContent=money(carRub);$('rLog').textContent=money(log);$('rDuty').textContent=money(duty);$('rCustomsFee').textContent=money(fee);$('rUtil').textContent=money(util);$('rDocs').textContent=money(docs);$('rDelivery').textContent=money(delivery);$('rExtra').textContent=money(extra);$('rCost').textContent=money(cost);$('rComm').textContent=money(comm);$('rClient').textContent=money(client);$('rMargin').textContent=(margin*100).toFixed(2)+'%';const missing=[];if(!$('vehicle').value.trim())missing.push('марка/модель');if(!$('date').value)missing.push('дата расчёта');if(!$('ageCategory').value)missing.push('возраст автомобиля');if(!(car>0))missing.push('цена автомобиля');if(!(r>0))missing.push('курс валюты');if(!(+$('eurRate').value>0))missing.push('курс EUR');if(!(+$('power').value>0))missing.push('мощность');if($('engine').value!=='electric'&&!(+$('volume').value>0))missing.push('объём двигателя');const ready=missing.length===0;const mode=$('purpose').value==='personal'?'личного пользования':'коммерческого ввоза';$('gate').textContent=ready?'🟢 Расчёт сформирован. Автоматические платежи рассчитаны в режиме '+mode+'.':'🟡 Заполните: '+missing.join(', ')+'.';$('gate').className='gate '+(ready?'ok':'bad');const low=margin<MIN_MARGIN;$('marginGate').textContent=low?'Маржа ниже внутреннего ориентира NEWCAR 5%.':'Маржа соответствует внутреннему ориентиру NEWCAR 5% и выше.';$('marginGate').className='gate hidden-client';return {type:'car_calculation',version:APP_VERSION,date:$('date').value,age_category:$('ageCategory').value,age_label:ageCategoryLabel(),country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:+$('volume').value||0,power:+$('power').value||0,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:+$('eurRate').value||0,car_price_rub:carRub,logistics:log,duty,customs_fee:fee,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_customs_fee:!$('manualCustomsFee').checked,auto_util:!$('manualUtil').checked,rates_source:$('ratesStatus').textContent}}
+function calculate(){const vehicle=($('vehicle').value||'').trim();const car=+$('carPrice').value||0;const r=+$('rate').value||0;const volume=+$('volume').value||0;const hp=+$('power').value||0;const engine=$('engine').value;const purpose=$('purpose').value;if(!vehicle||!(car>0)||!(r>0)||!(volume>0&&hp>0)){['rCar','rLog','rDuty','rCustomsFee','rUtil','rDocs','rDelivery','rExtra','rCost','rComm','rClient'].forEach(id=>$(id).textContent='0 ₽');$('rMargin').textContent='0%';$('gate').textContent='🟡 Заполните данные автомобиля и цену — расчёт не выполняется автоматически.';$('gate').className='gate bad';$('marginGate').className='gate hidden-client';return {type:'car_calculation',version:APP_VERSION,date:$('date').value,vehicle,car_price_local:car,rate:r,volume,power:hp};}const auto=calcAuto();const carRub=car*r,log=+$('logistics').value||0,duty=auto.duty,fee=auto.customsFee,util=auto.util,docs=+$('docs').value||0,delivery=+$('delivery').value||0,extra=+$('extra').value||0;const cost=carRub+log+duty+fee+util+docs+delivery+extra,comm=NEWCAR_COMMISSION,client=cost+comm,margin=client?comm/client:0;$('commissionFixed').value=comm;$('rCar').textContent=money(carRub);$('rLog').textContent=money(log);$('rDuty').textContent=money(duty);$('rCustomsFee').textContent=money(fee);$('rUtil').textContent=money(util);$('rDocs').textContent=money(docs);$('rDelivery').textContent=money(delivery);$('rDeliveryCity').textContent=$('city').value;$('rExtra').textContent=money(extra);$('rCost').textContent=money(cost);$('rComm').textContent=money(comm);$('rCommClient').textContent=money(comm);$('rClient').textContent=money(client);$('rMargin').textContent=(margin*100).toFixed(2)+'%';const missing=[];if(!$('vehicle').value.trim())missing.push('марка/модель');if(!$('date').value)missing.push('дата расчёта');if(!$('ageCategory').value)missing.push('возраст автомобиля');if(!(car>0))missing.push('цена автомобиля');if(!(r>0))missing.push('курс валюты');if(!(+$('eurRate').value>0))missing.push('курс EUR');if(!(+$('power').value>0))missing.push('мощность');if($('engine').value!=='electric'&&!(+$('volume').value>0))missing.push('объём двигателя');const ready=missing.length===0;const mode=$('purpose').value==='personal'?'личного пользования':'коммерческого ввоза';$('gate').textContent=ready?'🟢 Расчёт сформирован. Автоматические платежи рассчитаны в режиме '+mode+'.':'🟡 Заполните: '+missing.join(', ')+'.';$('gate').className='gate '+(ready?'ok':'bad');const low=margin<MIN_MARGIN;$('marginGate').textContent=low?'Маржа ниже внутреннего ориентира NEWCAR 5%.':'Маржа соответствует внутреннему ориентиру NEWCAR 5% и выше.';$('marginGate').className='gate hidden-client';return {type:'car_calculation',version:APP_VERSION,date:$('date').value,age_category:$('ageCategory').value,age_label:ageCategoryLabel(),country:$('country').value,city:$('city').value,vehicle:$('vehicle').value,engine,volume:+$('volume').value||0,power:+$('power').value||0,purpose,car_price_local:car,currency:$('currency').value,rate:r,eur_rate:+$('eurRate').value||0,car_price_rub:carRub,logistics:log,duty,customs_fee:fee,util,docs,delivery,extra,cost_total:cost,commission:comm,client_price:client,margin,auto_duty:!$('manualDuty').checked,auto_customs_fee:!$('manualCustomsFee').checked,auto_util:!$('manualUtil').checked,rates_source:$('ratesStatus').textContent}}
 $('date').value=localDateISO();
 $('date').max=localDateISO();
 $('date').addEventListener('change',loadRates);
@@ -368,7 +371,7 @@ updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 </script>
 
 
-<!-- NEWCAR v8.6: HOW IT WORKS / WHY NEWCAR -->
+<!-- NEWCAR v8.9: HOW IT WORKS / WHY NEWCAR -->
 
 
 <section class="newcar-v73-card" id="newcarWhy">
