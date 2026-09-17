@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 
-<title>NEWCAR — Автомобиль под ключ v6.5</title>
+<title>NEWCAR — Автомобиль под ключ v6.9</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -48,7 +48,7 @@
 
 <div class="wrap">
 
-  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v6.5</span></div></div>
+  <div class="brand"><div class="logo">NEW<span>CAR</span></div><div class="sub">Новый автомобиль для вас — даже если он с пробегом.<span class="badge">v6.9</span></div></div>
 
   <div class="client-hero"><div class="hero-kicker">NEWCAR • АВТОМОБИЛЬ ПОД КЛЮЧ</div><div class="hero-title">Рассчитайте стоимость автомобиля</div><div class="hero-text">Подбор, доставка и оформление — в одном расчёте. Итоговая цена формируется по вашим параметрам.</div></div>
 
@@ -256,7 +256,7 @@
 
     <div class="pick-grid">
 
-      <div class="field"><label>Ваш бюджет, ₽</label><input id="budget" type="number" min="0" value="3000000"></div>
+      <div class="field"><label>Ваш бюджет, ₽</label><input id="budget" type="number" min="0" value="" placeholder="Например: 3000000"></div>
 
       <div class="field"><label>Желаемая марка / модель</label><input id="pickVehicle" placeholder="Toyota RAV4, Honda Vezel..."></div>
 
@@ -270,13 +270,13 @@
 
     </div>
 
-    <div class="section">Что важно?</div>
+    <div class="section">Что важно? Можно выбрать несколько</div>
 
-    <div class="choice-row" id="pickPriorities"><button type="button" class="choice active" data-value="Цена">Цена</button><button type="button" class="choice" data-value="Состояние">Состояние</button><button type="button" class="choice" data-value="Комплектация">Комплектация</button></div>
+    <div class="choice-row" id="pickPriorities"><button type="button" class="choice" data-value="Цена">💰 Цена</button><button type="button" class="choice" data-value="Надёжность">🛡 Надёжность</button><button type="button" class="choice" data-value="Комплектация">✨ Комплектация</button><button type="button" class="choice" data-value="Срок доставки">⏱ Срок доставки</button></div>
 
   </div>
 
-  <div class="card request-box"><h2 class="title">📩 Запросить подбор</h2><div class="field"><label>Телефон или Telegram</label><input id="pickContact" placeholder="+7 900 000-00-00 или @username"></div><div class="field"><label>Комментарий</label><input id="pickComment" placeholder="Например: нужен RAV4 для семьи, левый руль не принципиален"></div><button type="button" class="btn" id="pickRequestBtn">ОТПРАВИТЬ ЗАПРОС НА ПОДБОР</button><div id="pickSuccess" class="success hidden-client">✅ Запрос на подбор сформирован. Менеджер свяжется с вами.</div><div class="mini-note">После отправки менеджеру передадим бюджет, страну, возраст и остальные пожелания.</div></div>
+  <div class="card request-box"><h2 class="title">📩 Запросить подбор</h2><div class="field"><label>Телефон или Telegram</label><input id="pickContact" placeholder="+7 900 000-00-00 или @username"></div><div class="field"><label>Комментарий</label><input id="pickComment" placeholder="Например: нужен RAV4 для семьи, левый руль не принципиален"></div><button type="button" class="btn" id="pickRequestBtn">🔎 ПОДОБРАТЬ МНЕ АВТО</button><div id="pickSuccess" class="success hidden-client">✅ Запрос на подбор сформирован. Менеджер свяжется с вами.</div><div class="mini-note">После отправки менеджер получит бюджет, страну, возраст, кузов, двигатель и ваши приоритеты.</div></div>
 
   <div class="card"><div class="pick-grid"><div class="pick-card"><strong>🇯🇵 Япония</strong><span>Аукционы и проверенная история</span></div><div class="pick-card"><strong>🇨🇳 Китай</strong><span>Широкий выбор комплектаций</span></div><div class="pick-card"><strong>🇰🇷 Корея</strong><span>Корейский рынок и автомобили с пробегом</span></div><div class="pick-card"><strong>🧾 Под ключ</strong><span>Проверка → расчёт → доставка</span></div></div></div>
 
@@ -310,7 +310,7 @@
 
 </section>
 
-  <div class="footer">NEWCAR • Автомобиль под ключ • v6.8</div>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v6.9</div>
 
 </div>
 
@@ -326,7 +326,7 @@ const NEWCAR_COMMISSION=50000, MIN_MARGIN=.05, BASE_UTIL=20000;
 
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
 
-const APP_VERSION='v6.8';
+const APP_VERSION='v6.9';
 
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 
@@ -522,17 +522,29 @@ function showSuccess(payload){
 
   if(summary){
 
-    const carName=payload?.vehicle||'Автомобиль';
+    if(payload?.type==='selection_request'){
 
-    const dateText=payload?.date?fmtDateRU(payload.date):'';
+      const country={any:'🌏 Любая',JP:'🇯🇵 Япония',CN:'🇨🇳 Китай',KR:'🇰🇷 Корея'}[payload.country]||payload.country||'—';
 
-    const currency=payload?.currency||'';
+      const priorities=(payload.priorities||[]).length?payload.priorities.join(', '):'Без приоритета';
 
-    const carLocal=payload?.car_price_local>0?`${Number(payload.car_price_local).toLocaleString('ru-RU')} ${currency}`:'—';
+      summary.innerHTML=`<div class=\"srow\"><span>Бюджет</span><b>${money(payload.budget)}</b></div><div class=\"srow\"><span>Страна</span><b>${country}</b></div><div class=\"srow\"><span>Кузов</span><b>${payload.body||'Любой'}</b></div><div class=\"srow\"><span>Двигатель</span><b>${payload.engine||'Любой'}</b></div><div class=\"srow\"><span>Приоритеты</span><b>${priorities}</b></div>`;
 
-    const total=payload?.client_price>0?money(payload.client_price):'—';
+    }else{
 
-    summary.innerHTML=`<div class=\"srow\"><span>Автомобиль</span><b>${carName}</b></div><div class=\"srow\"><span>Дата расчёта</span><b>${dateText}</b></div><div class=\"srow\"><span>Цена автомобиля</span><b>${carLocal}</b></div><div class=\"srow stotal\"><span>Стоимость под ключ</span><b>${total}</b></div>`;
+      const carName=payload?.vehicle||'Автомобиль';
+
+      const dateText=payload?.date?fmtDateRU(payload.date):'';
+
+      const currency=payload?.currency||'';
+
+      const carLocal=payload?.car_price_local>0?`${Number(payload.car_price_local).toLocaleString('ru-RU')} ${currency}`:'—';
+
+      const total=payload?.client_price>0?money(payload.client_price):'—';
+
+      summary.innerHTML=`<div class=\"srow\"><span>Автомобиль</span><b>${carName}</b></div><div class=\"srow\"><span>Дата расчёта</span><b>${dateText}</b></div><div class=\"srow\"><span>Цена автомобиля</span><b>${carLocal}</b></div><div class=\"srow stotal\"><span>Стоимость под ключ</span><b>${total}</b></div>`;
+
+    }
 
   }
 
@@ -542,7 +554,9 @@ function showSuccess(payload){
 
     $('successOverlay').classList.add('hidden-client');
 
-    $('rClient')?.scrollIntoView({behavior:'smooth',block:'center'});
+    if(payload?.type==='selection_request') $('pick')?.scrollIntoView({behavior:'smooth',block:'start'});
+
+    else $('rClient')?.scrollIntoView({behavior:'smooth',block:'center'});
 
     if(tg && tg.initData && typeof tg.close==='function'){setTimeout(()=>{try{tg.close()}catch(e){}},150)}
 
@@ -594,17 +608,21 @@ $('requestBtn').addEventListener('click',async()=>{
 
 });
 
-document.querySelectorAll('#pickPriorities .choice').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#pickPriorities .choice').forEach(x=>x.classList.remove('active'));b.classList.add('active')}));
+document.querySelectorAll('#pickPriorities .choice').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('active')}));
 
 $('pickRequestBtn').addEventListener('click',async()=>{
 
+  const budget=+$('budget').value||0;
+
   const contact=$('pickContact').value.trim();
+
+  if(!(budget>0)){alert('Укажите бюджет подбора.');$('budget').focus();return}
 
   if(!contact){$('pickContact').focus();return}
 
   const priorities=[...document.querySelectorAll('#pickPriorities .choice.active')].map(x=>x.dataset.value);
 
-  const payload={type:'selection_request',version:APP_VERSION,budget:+$('budget').value||0,vehicle:$('pickVehicle').value.trim(),country:$('pickCountry').value,age:$('pickAge').value,body:$('pickBody').value,engine:$('pickEngine').value,priorities,contact,comment:$('pickComment').value.trim()};
+  const payload={type:'selection_request',version:APP_VERSION,budget,vehicle:$('pickVehicle').value.trim(),country:$('pickCountry').value,age:$('pickAge').value,body:$('pickBody').value,engine:$('pickEngine').value,priorities,contact,comment:$('pickComment').value.trim()};
 
   await submitLead(payload,$('pickSuccess'));
 
@@ -620,7 +638,7 @@ $('managerBtn').addEventListener('click',async()=>{
 
   await submitLead(payload,$('managerSuccess'));
 
-});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));if(tg?.initDataUnsafe?.user){const u=tg.initDataUnsafe.user;$('leadName').value=[u.first_name,u.last_name].filter(Boolean).join(' ');}
+});document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tabpage').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden')}));if(tg?.initDataUnsafe?.user){const u=tg.initDataUnsafe.user;$('leadName').value=[u.first_name,u.last_name].filter(Boolean).join(' ');if(u.username && !$('pickContact').value)$('pickContact').value='@'+u.username;}
 
 updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
