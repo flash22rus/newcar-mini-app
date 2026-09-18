@@ -58,16 +58,19 @@
 
 .details{margin-top:10px}.details summary{cursor:pointer;color:#9fc4ff;font-size:12px;font-weight:700;padding:8px 0}.lead-card{border-color:#245d44}.lead-note{font-size:11px;color:#91a0b2;margin-top:6px}.success{background:#14271f;border:1px solid #245d44;color:#8ee6b5;border-radius:10px;padding:10px;font-size:12px;margin-top:8px}.hidden-client{display:none!important}@media(max-width:420px){.benefits{grid-template-columns:1fr}}
 
+ 
 
 /* v6.3 NEWCAR selection + manager */
 
 .section-hero{background:linear-gradient(135deg,#111b23,#1d2a36);border:1px solid #2c4350;border-radius:17px;padding:16px;margin-bottom:12px}.section-kicker{font-size:11px;color:#8ee6b5;font-weight:800;letter-spacing:.5px}.section-title{font-size:25px;font-weight:900;margin:5px 0 6px}.section-text{font-size:13px;color:#b8c4d2}.pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pick-card{background:linear-gradient(135deg,#18232d,#202a36);border:1px solid #304252;border-radius:15px;padding:13px}.pick-card strong{display:block;font-size:14px;margin-bottom:4px}.pick-card span{font-size:12px;color:#91a0b2}.choice-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.choice{border:1px solid #334152;background:#141c25;color:#fff;border-radius:10px;padding:10px 6px;font-weight:700;font-size:12px}.choice.active{border-color:#16b364;background:#132a20}.request-box{background:#13251e;border:1px solid #245d44;border-radius:14px;padding:13px}.manager-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.contact-card{display:flex;align-items:center;gap:12px;background:#141c25;border:1px solid #304252;border-radius:12px;padding:12px}.contact-icon{font-size:25px}.contact-card b{display:block}.contact-card span{font-size:11px;color:#91a0b2}.mini-note{font-size:11px;color:#91a0b2;margin-top:8px}.cta-secondary{background:#263241}.@media(max-width:420px){.pick-grid{grid-template-columns:1fr}.manager-actions{grid-template-columns:1fr}.choice-row{grid-template-columns:1fr 1fr}}
 
+ 
 
 .success-overlay{position:fixed;inset:0;background:rgba(4,10,14,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;z-index:9999}.success-modal{width:min(100%,420px);background:linear-gradient(145deg,#16242b,#0d171d);border:1px solid #18c878;border-radius:24px;padding:30px 24px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}.success-icon{font-size:54px;margin-bottom:10px}.success-modal h2{margin:0 0 10px;font-size:28px}.success-modal p{color:#b9c6ce;line-height:1.5;margin:0 0 20px}.success-modal .btn{width:100%}.success-summary{margin:14px 0;padding:12px;border:1px solid #2d7e5a;border-radius:12px;background:#101b20;text-align:left;font-size:13px;color:#d8e0ea}.success-summary .srow{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.07)}.success-summary .srow:last-child{border-bottom:0}.success-summary b{color:#fff;white-space:nowrap}.success-summary .stotal{font-size:17px;font-weight:800;color:#8ee6b5;padding-top:8px}.hidden-client{display:none!important}
 
 </style>
 
+ 
 
 <style id="newcar-v73-info">
 
@@ -93,10 +96,15 @@
 
 </style>
 
+ 
 
+ 
 
+ 
 
+ 
 
+ 
 
 <style id="newcar-v78-steps">
 
@@ -110,28 +118,7 @@
 
 </style>
 
-
-
-<style id="newcar-v90-cta">
-
-.want-car-box{
-
-  margin-top:14px;padding:16px;border-radius:18px;
-
-  border:1px solid rgba(255,255,255,.12);
-
-  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035));
-
-}
-
-.want-car-title{font-size:18px;font-weight:800}
-
-.want-car-subtitle{font-size:12px;line-height:1.45;opacity:.65;margin:6px 0 12px}
-
-.want-car-box .primary-btn{width:100%}
-
-</style>
-
+ 
 
 </head>
 
@@ -139,6 +126,7 @@
 
 <div id="successOverlay" class="success-overlay hidden-client"><div class="success-modal"><div class="success-icon">✅</div><h2>Заявка отправлена</h2><p>Менеджер NEWCAR получил ваши параметры. Мы свяжемся с вами для уточнения деталей.</p><div id="successSummary" class="success-summary"></div><button type="button" class="btn" id="successCloseBtn">ВЕРНУТЬСЯ В NEWCAR</button></div></div>
 
+ 
 
 <div class="wrap">
 
@@ -148,6 +136,7 @@
 
   <div class="tabs"><button class="tab active" data-tab="calc">📊 Расчёт</button><button class="tab" data-tab="pick">🔎 Подбор</button><button class="tab" data-tab="manager">👨‍💼 Менеджер</button></div>
 
+ 
 
   <section id="calc" class="tabpage">
 
@@ -181,6 +170,7 @@
 
     </div>
 
+ 
 
     <details class="card details">
 
@@ -206,6 +196,7 @@
 
     </details>
 
+ 
 
     <details class="card details">
 
@@ -239,6 +230,7 @@
 
     </details>
 
+ 
 
     <div class="card">
 
@@ -262,6 +254,7 @@
 
     </div>
 
+ 
 
     <div class="card">
 
@@ -325,6 +318,7 @@
 
     </div>
 
+ 
 
     <div class="card lead-card" id="leadCard">
 
@@ -348,6 +342,7 @@
 
   </section>
 
+ 
 
   <section id="pick" class="tabpage hidden">
 
@@ -383,6 +378,7 @@
 
 </section>
 
+ 
 
 <section id="manager" class="tabpage hidden">
 
@@ -408,17 +404,9 @@
 
   <div class="card"><h2 class="title">Почему удобно работать с NEWCAR</h2><div class="manager-actions"><div class="contact-card"><div class="contact-icon">🔎</div><div><b>Подбор</b><span>Под ваши задачи и бюджет</span></div></div><div class="contact-card"><div class="contact-icon">🧾</div><div><b>Прозрачный расчёт</b><span>Стоимость до покупки</span></div></div><div class="contact-card"><div class="contact-icon">🚢</div><div><b>Доставка</b><span>Контроль логистики</span></div></div><div class="contact-card"><div class="contact-icon">🤝</div><div><b>Сопровождение</b><span>До получения автомобиля</span></div></div></div></div>
 
-<div class="field">
-
-<label>Комментарий для уточнения данных по авто</label>
-
-<textarea id="managerComment" rows="4" placeholder="Например: цвет, комплектация, привод, тип двигателя, желаемый год или другие пожелания"></textarea>
-
-</div>
-
 </section>
 
-  <div class="footer">NEWCAR • Автомобиль под ключ • v9.0</div>
+  <div class="footer">NEWCAR • Автомобиль под ключ • v8.9</div>
 
 </div>
 
@@ -430,13 +418,13 @@ if(tg){tg.ready();tg.expand();}
 
 const $=id=>document.getElementById(id);
 
-const NEWCAR_COMMISSION=75000;
+const NEWCAR_COMMISSION=50000;
 
 const MIN_MARGIN=0.05;
 
 const WORKER_URL='https://newcar-leads.dmitriy-zaycev83.workers.dev/';
 
-const APP_VERSION='9.4';
+const APP_VERSION='v8.9';
 
 const CBR_FALLBACK={date:'16.09.2026',JPY:.544689,CNY:12.5538,KRW:.0626152,EUR:97.3012};
 
@@ -500,6 +488,7 @@ async function loadRates(){
 
   $('ratesStatus').className='auto';
 
+ 
 
   const apply=(vals,actualDate)=>{
 
@@ -509,6 +498,7 @@ async function loadRates(){
 
     if(!(map[cur]>0)||!(vals.EUR>0)) throw new Error('Worker не вернул нужные валюты');
 
+ 
 
     $('rate').value=map[cur].toFixed(6);
 
@@ -516,6 +506,7 @@ async function loadRates(){
 
     $('eurRate').value=vals.EUR.toFixed(4);
 
+ 
 
     const shownDate=actualDate||iso;
 
@@ -531,6 +522,7 @@ async function loadRates(){
 
   };
 
+ 
 
   try{
 
@@ -540,16 +532,19 @@ async function loadRates(){
 
     base.searchParams.set('v',Date.now());
 
+ 
 
     const res=await fetch(base.toString(),{cache:'no-store'});
 
     if(!res.ok) throw new Error('Worker rates HTTP '+res.status);
 
+ 
 
     const data=await res.json();
 
     if(!data.ok||!data.rates) throw new Error(data.error||'Worker не вернул курсы');
 
+ 
 
     return apply(data.rates,data.actualDate||iso);
 
@@ -575,6 +570,7 @@ async function loadRates(){
 
 }
 
+ 
 
 function personalDuty(carRub,volumeCc,eurRate,category){const ageCat=$('ageCategory').value;if(!eurRate)return {value:0,info:'Не задан курс EUR.'};const carEur=carRub/eurRate;if(ageCat==='under3'){let percent,minPerCc;if(carEur<=8500){percent=.54;minPerCc=2.5}else if(carEur<=16700){percent=.48;minPerCc=3.5}else if(carEur<=42300){percent=.48;minPerCc=5.5}else if(carEur<=84500){percent=.48;minPerCc=7.5}else if(carEur<=169000){percent=.48;minPerCc=15}else{percent=.48;minPerCc=20}const byPercent=carEur*percent,byVol=volumeCc*minPerCc,dutyEur=Math.max(byPercent,byVol);return {value:dutyEur*eurRate,info:`Личное пользование: до 3 лет; ${Math.round(percent*100)}% от стоимости, но не менее ${minPerCc} EUR/см³.`}}if(ageCat==='3to5'){let r=volumeCc<=1000?1.5:volumeCc<=1500?1.7:volumeCc<=1800?2.5:volumeCc<=2300?2.7:volumeCc<=3000?3:3.6;return {value:volumeCc*r*eurRate,info:`Личное пользование: 3–5 лет; ${r} EUR/см³ × ${volumeCc.toLocaleString('ru-RU')} см³.`}}let r=volumeCc<=1000?3:volumeCc<=1500?3.2:volumeCc<=1800?3.5:volumeCc<=2300?4.8:volumeCc<=3000?5:5.7;return {value:volumeCc*r*eurRate,info:`Личное пользование: старше 5 лет; ${r} EUR/см³ × ${volumeCc.toLocaleString('ru-RU')} см³.`}}
 
@@ -670,7 +666,7 @@ async function submitLead(payload,successEl){
 
     document.querySelectorAll('.btn').forEach(b=>{if(b.id!=='successCloseBtn')b.disabled=true});
 
-    await sendLead(window.NEWCAR_BUILD_LEAD ? window.NEWCAR_BUILD_LEAD(payload) : payload);
+    await sendLead(payload);
 
     showSuccess(payload);
 
@@ -722,9 +718,7 @@ $('pickRequestBtn').addEventListener('click',async()=>{
 
   const priorities=[...document.querySelectorAll('#pickPriorities .choice.active')].map(x=>x.dataset.value);
 
-  const payload={type:'selection_request',version:APP_VERSION,budget,vehicle:$('pickVehicle').value.trim(),country:$('pickCountry').value,age:$('pickAge').value,body:$('pickBody').value,engine:$('pickEngine').value,priorities,contact,comment:$('pickComment')?.value?.trim() || '',
-
-};
+  const payload={type:'selection_request',version:APP_VERSION,budget,vehicle:$('pickVehicle').value.trim(),country:$('pickCountry').value,age:$('pickAge').value,body:$('pickBody').value,engine:$('pickEngine').value,priorities,contact,comment:$('pickComment').value.trim()};
 
   await submitLead(payload,$('pickSuccess'));
 
@@ -746,11 +740,15 @@ updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
 </script>
 
+ 
 
+ 
 
-<!-- NEWCAR v9.0: HOW IT WORKS / WHY NEWCAR -->
+<!-- NEWCAR v8.9: HOW IT WORKS / WHY NEWCAR -->
 
+ 
 
+ 
 
 <section class="newcar-v73-card" id="newcarWhy">
 
@@ -774,10 +772,15 @@ updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
 </section>
 
+ 
 
+ 
 
+ 
 
+ 
 
+ 
 
 <div class="contact-email" style="margin-top:12px;">
 
@@ -791,7 +794,9 @@ updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
 </div>
 
+ 
 
+ 
 
 <section class="info-section" id="how-it-works-v78">
 
@@ -817,364 +822,6 @@ updateCurrency();updateDelivery();calculate();updateCountryCosts();loadRates();
 
 </section>
 
-
-
-<div id="wantCarBox" class="want-car-box">
-
-  <div class="want-car-title">🚗 ХОЧУ ЭТОТ АВТОМОБИЛЬ</div>
-
-  <div class="want-car-subtitle">Отправьте расчёт менеджеру NEWCAR — параметры автомобиля и стоимость подставятся автоматически.</div>
-
-  <button id="wantCarBtn" class="primary-btn" type="button">🚗 ОТПРАВИТЬ ЗАЯВКУ</button>
-
-</div>
-
-
-
-<script id="newcar-v90-lead">
-
-(function(){
-
-  function buildLead(){
-
-    const calc = (typeof calculate === 'function') ? calculate() : {};
-
-    return {
-
-      type: 'car_request',
-
-      source: 'NEWCAR Mini App',
-
-      date: $('date')?.value || '',
-
-      country: $('country')?.value || '',
-
-      city: $('city')?.value || '',
-
-      vehicle: $('vehicle')?.value || '',
-
-      age_category: $('ageCategory')?.value || '',
-
-      engine: $('engine')?.value || '',
-
-      volume: +($('volume')?.value || 0),
-
-      power: +($('power')?.value || 0),
-
-      purpose: $('purpose')?.value || '',
-
-      car_price_local: +($('carPrice')?.value || 0),
-
-      currency: $('currency')?.value || '',
-
-      rate: +($('rate')?.value || 0),
-
-      car_price_rub: calc.car_price_rub || 0,
-
-      logistics: calc.logistics || 0,
-
-      delivery: calc.delivery || 0,
-
-      docs: calc.docs || 0,
-
-      duty: calc.duty || 0,
-
-      customs_fee: calc.customs_fee || 0,
-
-      util: calc.util || 0,
-
-      extra: calc.extra || 0,
-
-      commission: calc.commission || 0,
-
-      client_price: calc.client_price || 0
-
-    };
-
-  }
-
-
-  async function sendCarRequest(){
-
-    try{
-
-      const payload = buildLead();
-
-      if(!payload.vehicle || !(payload.car_price_local>0)){
-
-        $('gate').textContent='🟡 Сначала заполните данные автомобиля и цену.';
-
-        $('gate').className='gate bad';
-
-        return;
-
-      }
-
-      const btn=$('wantCarBtn');
-
-      if(btn){btn.disabled=true;btn.textContent='⏳ ОТПРАВКА...';}
-
-      await sendLead(window.NEWCAR_BUILD_LEAD ? window.NEWCAR_BUILD_LEAD(payload) : payload);
-
-      if(btn){btn.textContent='✅ ЗАЯВКА ОТПРАВЛЕНА';}
-
-      $('wantCarBox').innerHTML =
-
-        '<div class="want-car-title">✅ Заявка отправлена</div>'+
-
-        '<div class="want-car-subtitle">Менеджер NEWCAR получил параметры расчёта и свяжется с вами для уточнения деталей.</div>';
-
-    }catch(err){
-
-      const btn=$('wantCarBtn');
-
-      if(btn){btn.disabled=false;btn.textContent='🚗 ОТПРАВИТЬ ЗАЯВКУ';}
-
-      $('gate').textContent='🔴 Не удалось отправить заявку: '+err.message;
-
-      $('gate').className='gate bad';
-
-    }
-
-  }
-
-
-  window.addEventListener('DOMContentLoaded',function(){
-
-    const btn=$('wantCarBtn');
-
-    if(btn) btn.addEventListener('click',sendCarRequest);
-
-  });
-
-})();
-
-</script>
-
-
-
-<script>
-
-(function(){
-
-  function newcarLocalDateISO(){
-
-    const d = new Date();
-
-    const y = d.getFullYear();
-
-    const m = String(d.getMonth()+1).padStart(2,'0');
-
-    const day = String(d.getDate()).padStart(2,'0');
-
-    return `${y}-${m}-${day}`;
-
-  }
-
-  function initNewcarDate(){
-
-    const el = document.getElementById('date');
-
-    if(!el) return;
-
-    const today = newcarLocalDateISO();
-
-    if(!el.value) el.value = today;
-
-    el.max = today;
-
-  }
-
-  if(document.readyState === 'loading'){
-
-    document.addEventListener('DOMContentLoaded', initNewcarDate);
-
-  } else {
-
-    initNewcarDate();
-
-  }
-
-})();
-
-</script>
-
-
-
-<script>
-
-(function(){
-
-  function activateTab(name){
-
-    document.querySelectorAll('[data-tab]').forEach(function(el){
-
-      el.classList.toggle('active', el.getAttribute('data-tab') === name);
-
-    });
-
-    document.querySelectorAll('.tab-panel, [data-panel]').forEach(function(el){
-
-      const panel = el.getAttribute('data-panel') || el.id;
-
-      const show = panel === name || panel === ('panel-' + name);
-
-      el.style.display = show ? '' : 'none';
-
-      el.classList.toggle('active', show);
-
-    });
-
-  }
-
-
-  function bindTabs(){
-
-    const tabs = document.querySelectorAll('[data-tab]');
-
-    if(!tabs.length) return;
-
-    tabs.forEach(function(tab){
-
-      tab.addEventListener('click', function(e){
-
-        e.preventDefault();
-
-        activateTab(tab.getAttribute('data-tab'));
-
-      });
-
-    });
-
-  }
-
-
-  function initTabs(){
-
-    bindTabs();
-
-    const active = document.querySelector('[data-tab].active') || document.querySelector('[data-tab]');
-
-    if(active) activateTab(active.getAttribute('data-tab'));
-
-  }
-
-
-  if(document.readyState === 'loading'){
-
-    document.addEventListener('DOMContentLoaded', initTabs);
-
-  } else {
-
-    initTabs();
-
-  }
-
-})();
-
-</script>
-
-
-
-<script>
-
-/* NEWCAR v9.4 — structured lead data */
-
-(function(){
-
-  window.NEWCAR_BUILD_LEAD = function(payload){
-
-    payload = payload || {};
-
-    const f = v => (v === undefined || v === null || v === '') ? '—' : String(v);
-
-    const money = v => {
-
-      if(v === undefined || v === null || v === '') return '—';
-
-      const n = Number(String(v).replace(/\s/g,'').replace(',','.'));
-
-      return Number.isFinite(n) ? n.toLocaleString('ru-RU') + ' ₽' : String(v);
-
-    };
-
-
-    const lines = [
-
-      '🚗 ЗАЯВКА NEWCAR',
-
-      '',
-
-      '📌 Тип: ' + f(payload.type === 'car_request' ? 'Автомобиль из расчёта' :
-
-                         payload.type === 'selection_request' ? 'Подбор автомобиля' :
-
-                         payload.type === 'manager_request' ? 'Связь с менеджером' : payload.type),
-
-      '📅 Дата: ' + f(payload.date),
-
-      '🌍 Страна: ' + f(payload.country),
-
-      '🏙 Город получения: ' + f(payload.city),
-
-      '🚘 Автомобиль: ' + f(payload.vehicle || payload.make_model),
-
-      '🕐 Возраст: ' + f(payload.age_category || payload.age),
-
-      '⚙️ Двигатель: ' + f(payload.engine),
-
-      '🔧 Объём: ' + f(payload.volume),
-
-      '🐎 Мощность: ' + f(payload.power),
-
-      '🎯 Назначение: ' + f(payload.purpose),
-
-      '💬 Комментарий: ' + f(payload.comment),
-
-      '',
-
-      '💰 РАСЧЁТ',
-
-      'Цена автомобиля: ' + money(payload.car_price_rub),
-
-      'Логистика: ' + money(payload.logistics),
-
-      'Доставка: ' + money(payload.delivery),
-
-      'Таможенная пошлина: ' + money(payload.duty),
-
-      'Таможенный сбор: ' + money(payload.customs_fee),
-
-      'Утильсбор: ' + money(payload.util),
-
-      'Документы: ' + money(payload.docs),
-
-      'Доп. расходы: ' + money(payload.extra),
-
-      'Комиссия NEWCAR: ' + money(payload.commission),
-
-      'ИТОГО: ' + money(payload.client_price),
-
-      '',
-
-      '👤 Контакт: ' + f(payload.contact),
-
-      '📞 Способ связи: ' + f(payload.method || payload.communication)
-
-    ];
-
-
-    payload.lead_summary = lines.join('\n');
-
-    payload.lead_version = 'NEWCAR v9.4';
-
-    return payload;
-
-  };
-
-})();
-
-</script>
-
+ 
 
 </body></html>
